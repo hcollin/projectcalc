@@ -1,0 +1,47 @@
+import { PERSONROLE, Person, SENIORITY } from "./People";
+
+
+export interface Project {
+    id: string;
+    teams: Team[];
+    prices: PriceItem[];
+    phases: ProjectPhase[];
+
+
+}
+
+export interface Team {
+    id: string;
+    people: Person[];
+}
+
+export interface PriceItem {
+    name: string;
+    value: number;
+    roles: [PERSONROLE, SENIORITY][];
+    min?: number;
+    max?: number;
+
+}
+
+
+export interface ProjectPhase {
+    id: string;
+    weeks: number;
+    type: PHASETYPE;
+
+}
+
+export enum PHASETYPE {
+
+    DEFAULT = "Development",        // Normal default project development phase
+
+    CONSULTING = "Consulting",  // Consulting phase with higher prices and less people and short period
+
+    RAMPUP = "Rampup",          // Rampup phase with less crew and focus on learning and setting up
+    //CRUNCH = "Crunch",          // Crunch phase with more crew and focus on getting things done fast for a short period
+    //SKELETON = "Skeleton",      // Skeleton phase with minumum crew and on keeping things running
+    RAMPDOWN = "Rampdown",      // Rampdown phase with less crew and focus on documentation and handover
+
+    MAINTENANCE = "Maintenance",// Maintenance with no active development of new features, bug fixes etc. only
+}

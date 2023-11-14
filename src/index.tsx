@@ -3,13 +3,30 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { ThemeProvider } from '@emotion/react';
+import { CssBaseline, createTheme } from '@mui/material';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
+
+
+const theme = createTheme({
+  palette: {
+    mode: 'dark',
+  },
+  typography: {
+    fontSize: 16,
+  }
+});
+
 root.render(
   <React.StrictMode>
-    <App />
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <App />
+    </ThemeProvider>
+
   </React.StrictMode>
 );
 
