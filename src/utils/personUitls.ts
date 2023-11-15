@@ -9,7 +9,8 @@ export function createNewPerson(initVals?: Partial<Person>): Person {
         {
             id: uuidv4(),
             roles: [[PERSONROLE.Developer, SENIORITY.Mid]],
-            pricegroup: "defaultprice"
+            pricegroup: "defaultprice",
+            allocation: 1,
         }, 
         initVals || {});
 

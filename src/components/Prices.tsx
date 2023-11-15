@@ -42,7 +42,7 @@ const Prices = (props: PricesProps) => {
             {props.project.prices.map((priceItem, index) => {
 
                 return (
-                    <Card key={`price-item-${priceItem.name}`} >
+                    <Card key={`price-item-${priceItem.name}`} elevation={6}>
                         <CardContent>
                             <PriceSlider priceItem={priceItem} onUpdate={priceUpdate} removePrice={removePrice}/>
                         </CardContent>

@@ -5,6 +5,7 @@ export interface Person {
     name?: string;
     pricegroup: string;
     roles: [PERSONROLE, SENIORITY][];  // The role, seniority
+    allocation: number;
     
 }
 

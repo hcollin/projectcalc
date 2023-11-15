@@ -1,4 +1,4 @@
-import { Box, Button, Card, CardActionArea, CardContent, Modal, Stack, Typography } from "@mui/material";
+import { Box, Button, Card, CardActionArea, CardContent, IconButton, Modal, Stack, Typography } from "@mui/material";
 
 import { useState } from "react";
 
@@ -20,8 +20,10 @@ const style = {
 	padding: "1rem",
 };
 
-const RemoveButton = ({ onClick }: { onClick: () => void }) => {
+const RemoveButton = ({ onClick, noText }: { onClick: () => void, noText?: boolean }) => {
 	const [modelState, setModelState] = useState<boolean>(false);
+
+	const doNotShowText = noText || false;
 
 	function clickRemove() {
 		setModelState(true);
@@ -38,9 +40,12 @@ const RemoveButton = ({ onClick }: { onClick: () => void }) => {
 
 	return (
 		<>
-			<Button variant="outlined" size="small" color="error" onClick={clickRemove} startIcon={<DeleteIcon />}>
+			{!doNotShowText && <Button variant="outlined" size="small" color="error" onClick={clickRemove} startIcon={<DeleteIcon />}>
 				Remove
-			</Button>
+			</Button>}
+			{doNotShowText && <IconButton onClick={clickRemove} size="small" color="error">
+				<DeleteIcon />
+			</IconButton>}
 			<Modal open={modelState}>
 				<Card elevation={5} sx={style}>
 					<CardContent>

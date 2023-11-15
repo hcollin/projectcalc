@@ -29,9 +29,9 @@ export interface PriceItem {
 
 export interface ProjectPhase {
     id: string;
+    name?: string;
     weeks: number;
     type: PHASETYPE;
-
 }
 
 export enum PHASETYPE {

@@ -6,7 +6,7 @@ import { PriceItem } from "../models/Project";
 import { v4 } from "uuid";
 
 
-
+import AddIcon from "@mui/icons-material/Add";
 
 
 
@@ -68,11 +68,11 @@ const PricesView = (props: ViewProps) => {
                     <Card>
                         <CardContent>
                             <Stack direction="row" spacing={3}>
-                                <TextField label="New pricegroup name" variant="outlined" value={priceName} onChange={updateNewValue}></TextField>
-                                <TextField label="Minimum price" variant="outlined" value={newPriceMin} onChange={(e) => setNewPriceMin(parseInt(e.target.value))} type="number"></TextField>
-                                <TextField label="Maximum price" variant="outlined" value={newPriceMax} onChange={(e) => setNewPriceMax(parseInt(e.target.value))} type="number"></TextField>
+                                <TextField label="New pricegroup name" variant="outlined"  size="small" value={priceName} onChange={updateNewValue}></TextField>
+                                <TextField label="Minimum price" variant="outlined"  size="small" value={newPriceMin} onChange={(e) => setNewPriceMin(parseInt(e.target.value))} type="number"></TextField>
+                                <TextField label="Maximum price" variant="outlined"  size="small" value={newPriceMax} onChange={(e) => setNewPriceMax(parseInt(e.target.value))} type="number"></TextField>
 
-                                <Button variant="contained" onClick={newPrice}>Add</Button>
+                                <Button variant="contained" onClick={newPrice} size="small" startIcon={<AddIcon />}>Add</Button>
                             </Stack>
                         </CardContent>
                     </Card>
