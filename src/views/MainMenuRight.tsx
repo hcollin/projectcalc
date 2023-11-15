@@ -25,7 +25,7 @@ const MainMenuRight = ({ active, onUpdate }: { active: string, onUpdate: (a: str
                     PrCa
                 </Typography>
 
-                
+
                 <List>
                     <ListItem disablePadding>
                         <ListItemButton onClick={() => changeView("prices")}>

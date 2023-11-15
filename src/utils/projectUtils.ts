@@ -39,10 +39,10 @@ function getAllRolesInProject(project: Project): [PERSONROLE, SENIORITY][] {
 
 }
 
-function getTotalHours(project: Project): number {
+export function getTotalHours(project: Project): number {
 
     return project.phases.reduce((total, phase) => {
-        return total + (phase.weeks * 40);
+        return total + (phase.weeks * 37.5);
     }, 0);
 
 }

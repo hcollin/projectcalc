@@ -12,6 +12,7 @@ export interface Project {
 
 export interface Team {
     id: string;
+    name?: string;
     people: Person[];
 }
 
@@ -21,6 +22,7 @@ export interface PriceItem {
     roles: [PERSONROLE, SENIORITY][];
     min?: number;
     max?: number;
+    default?: true;
 
 }
 
@@ -44,4 +46,21 @@ export enum PHASETYPE {
     RAMPDOWN = "Rampdown",      // Rampdown phase with less crew and focus on documentation and handover
 
     MAINTENANCE = "Maintenance",// Maintenance with no active development of new features, bug fixes etc. only
+}
+
+
+export enum TEAMSIZE {
+    MINI,
+    SMALL,
+    MEDIUM,
+    LARGE,
+    HUGE
+}
+
+
+export enum TEAMTYPE {
+    FULL = "Full Project Team",
+    DEV = "Development Team",
+    UX = "Design Team",
+    QA = "QA & Test Team",
 }

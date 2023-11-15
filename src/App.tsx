@@ -1,7 +1,7 @@
 
 import { Box, Card, CardContent, Container, Drawer, Typography, createTheme } from '@mui/material';
 import './App.css';
-import ProjectPeople from './views/ProjectPeople';
+
 import { ThemeProvider } from '@emotion/react';
 import { Draw } from '@mui/icons-material';
 import PriceSlider from './components/PriceSlider';
@@ -43,6 +43,9 @@ function App() {
       {activeView === "prices" && <PricesView project={project} onUpdate={updateProject} />}
       {activeView === "phases" && <PhasesView project={project} onUpdate={updateProject} />}
       {activeView === "teams" && <TeamsView project={project} onUpdate={updateProject} />}
+
+
+      <ProjectSummary project={project} />
 
     </>
 

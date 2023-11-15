@@ -2,7 +2,9 @@
 
 export interface Person {
     id: string;
+    name?: string;
     roles: [PERSONROLE, SENIORITY][];
+    hats: string[]
     
 }
 
@@ -12,6 +14,7 @@ export enum PERSONROLE {
     Developer = "Developer",
     Designer = "Designer",
     Manager = "Manager",
+    Tester = "Tester",
 
     // BackendDeveloper = "Backend Developer",
     // FrontendDeveloper = "Frontend Developer",
@@ -49,3 +52,8 @@ export enum SENIORITY {
     Principal = "Principal",
 }
 
+export enum HATS {
+    SCRUMMASTER = "Scrumm Master",
+    PRODUCTOWNER = "Product Owner",
+    PROJECTMANAGER = "Project Manager",
+}

@@ -1,5 +1,6 @@
 import { PERSONROLE, SENIORITY } from "../models/People";
 import { PHASETYPE, Project } from "../models/Project";
+import { createNewPerson } from "../utils/personUitls";
 
 export const exampleProject: Project = {
     id: "proj-1",
@@ -7,32 +8,31 @@ export const exampleProject: Project = {
         {
             id: "team-1",
             people: [
-                {
-                    id: "person-1",
-                    roles: [[PERSONROLE.Developer, SENIORITY.Mid]]
-                },
-                {
-                    id: "person-2",
-                    roles: [[PERSONROLE.Developer, SENIORITY.Mid]]
-                },
-                {
-                    id: "person-3",
-                    roles: [[PERSONROLE.Developer, SENIORITY.Senior]]
-                },
-                {
-                    id: "person-4",
-                    roles: [[PERSONROLE.Manager, SENIORITY.Mid]]
-                }
+                createNewPerson({ name: "PM / PO", roles: [[PERSONROLE.Manager, SENIORITY.Mid]]  }),
+                createNewPerson({ roles: [[PERSONROLE.Developer, SENIORITY.Senior]]  }),
+                createNewPerson({ roles: [[PERSONROLE.Developer, SENIORITY.Mid]]  }),
+                createNewPerson({ roles: [[PERSONROLE.Developer, SENIORITY.Mid]]  }),
+                
+                
+
             ]
         }
     ],
     prices: [
         {
+            name: "Default",
+            value: 90,
+            roles: [],
+            min: 60,
+            max: 125,
+            default: true
+        },
+        {
             name: "Developer",
             value: 90,
             roles: [[PERSONROLE.Developer, SENIORITY.all]],
             min: 60,
-            max: 125
+            max: 125,
         },
         {
             name: "Manager",
