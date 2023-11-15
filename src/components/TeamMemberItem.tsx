@@ -6,12 +6,16 @@ import {
 	Box,
 	Button,
 	Card,
+	FormControl,
+	InputLabel,
 	MenuItem,
 	Select,
+	Slider,
 	Stack,
 	TextField,
 	Typography,
 } from "@mui/material";
+import Grid from "@mui/material/Unstable_Grid2";
 import { Person, SENIORITY } from "../models/People";
 import { Project } from "../models/Project";
 import { useState } from "react";
@@ -23,6 +27,7 @@ import ModeEditIcon from "@mui/icons-material/ModeEdit";
 import CancelButton from "./CancelButton";
 import SaveButton from "./SaveButton";
 import RemoveButton from "./RemoveButton";
+import EditButton from "./EditButton";
 
 const TeamMemberItem = ({
 	project,
@@ -39,6 +44,7 @@ const TeamMemberItem = ({
 
 	const [newName, setNewName] = useState<string>(person.name || "");
 	const [newPriceGroup, setNewPriceGroup] = useState<string>(person.pricegroup || "");
+	const [newAllocation, etNewAllocation] = useState<number>(person.allocation ? person.allocation * 100 : 100);
 
 	const { id, name, roles, pricegroup } = person;
 
@@ -48,7 +54,7 @@ const TeamMemberItem = ({
 	};
 
 	function saveMember() {
-		const newPerson = { ...person, name: newName, pricegroup: newPriceGroup };
+		const newPerson = { ...person, name: newName, pricegroup: newPriceGroup, allocation: newAllocation / 100 };
 		onUpdate(newPerson);
 		setEditMode(false);
 	}
@@ -57,22 +63,53 @@ const TeamMemberItem = ({
 		setEditMode(false);
 	}
 
+	function handleSliderChange(e: any, value: number | number[]) {
+		etNewAllocation(value as number);
+	}
+
 	return (
 		<Accordion>
-			<AccordionSummary expandIcon={<ExpandMoreIcon />}>{name}</AccordionSummary>
+			<AccordionSummary expandIcon={<ExpandMoreIcon />}>
+				<Box>
+					<Typography variant="body1" color="info">{name} <Typography variant="mini" color="info.light"> ({person.allocation * 100}% @ {priceItem.value}€/h)</Typography></Typography>
+					</Box>
+				</AccordionSummary>
 			{editMode && (
 				<AccordionDetails>
-					<TextField label="Name" value={newName} onChange={(e) => setNewName(e.target.value)} />
+					<Grid container spacing={1}>
+						<Grid xs={7}>
+							<TextField label="Name" value={newName} onChange={(e) => setNewName(e.target.value)} />
+						</Grid>
+						<Grid xs={5}>
+							<FormControl>
+								<InputLabel>Price Group</InputLabel>
+								<Select value={newPriceGroup} onChange={(e) => setNewPriceGroup(e.target.value as string)} label="Price Group">
+									{project.prices.map((price) => {
+										return (
+											<MenuItem value={price.id} key={price.id}>
+												{price.name} {price.value} €/h
+											</MenuItem>
+										);
+									})}
+								</Select>
+							</FormControl>
+						</Grid>
+					</Grid>
 
-					<Select value={newPriceGroup} onChange={(e) => setNewPriceGroup(e.target.value as string)}>
-						{project.prices.map((price) => {
-							return (
-								<MenuItem value={price.id} key={price.id}>
-									{price.name} {price.value} €/h
-								</MenuItem>
-							);
-						})}
-					</Select>
+					<Stack direction="column" spacing={1} alignItems="flex-start" justifyContent="flex-start" sx={{marginTop: "1rem"}}>
+					<Typography variant="body1">Allocation {newAllocation}%</Typography>
+					
+					<Slider
+						value={newAllocation}
+						min={0}
+						max={100}
+						onChange={handleSliderChange}
+						marks={true}
+						
+						step={10}
+					></Slider>
+					</Stack>
+
 				</AccordionDetails>
 			)}
 			{!editMode && (
@@ -98,18 +135,23 @@ const TeamMemberItem = ({
 							<Typography variant="body2">{priceItem.name}</Typography>
 							<Typography variant="body2">{priceItem.value} €/h</Typography>
 						</Box>
+						<Box>
+							<Typography variant="body1">Allocation</Typography>
+							<Typography variant="body2">{person.allocation * 100}%</Typography>
+						</Box>
 					</Stack>
 				</AccordionDetails>
 			)}
 			{!editMode && (
 				<AccordionActions>
-					<RemoveButton onClick={() => onRemove(person)} />
+					<RemoveButton onClick={() => onRemove(person)} noText />
 					{/* <Button variant="contained" size="small" color="error" onClick={() => onRemove(person)} startIcon={<PersonRemoveIcon />}>
 						Remove
 					</Button> */}
-					<Button variant="contained" size="small" color="primary" onClick={() => setEditMode(true)} startIcon={<ModeEditIcon />}>
+					<EditButton onClick={() => setEditMode(true)} />
+					{/* <Button variant="contained" size="small" color="primary" onClick={() => setEditMode(true)} startIcon={<ModeEditIcon />}>
 						Edit Mode
-					</Button>
+					</Button> */}
 				</AccordionActions>
 			)}
 			{editMode && (

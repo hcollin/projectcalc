@@ -25,6 +25,7 @@ import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import CancelButton from "./CancelButton";
 import SaveButton from "./SaveButton";
+import EditButton from "./EditButton";
 
 const ProjectPhaseItem = ({
 	phase,
@@ -118,9 +119,8 @@ const ProjectPhaseItem = ({
 			</Grid>
 			<Grid xs={1}>
 				<RemoveButton onClick={() => onRemove(phase)} noText />
-				<IconButton onClick={() => setEditMode(!editMode)} size="small">
-					<EditIcon color="primary" />
-				</IconButton>
+				<EditButton onClick={() => setEditMode(!editMode)} noText />
+				
 			</Grid>
 		</Grid>
 	);

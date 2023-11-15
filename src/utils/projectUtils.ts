@@ -13,9 +13,9 @@ export function calculatePrice(project: Project): number {
 
     pricegroups.forEach(pricegroup => {
 
-        const price = project.prices.find(priceItem => priceItem.id === pricegroup) || project.prices[0];
+        const price = project.prices.find(priceItem => priceItem.id === pricegroup[0]) || project.prices[0];
 
-        const subPrice = price.value * totalHours;
+        const subPrice = price.value * totalHours * pricegroup[1];
 
         totalPrice += subPrice;
 
@@ -25,15 +25,16 @@ export function calculatePrice(project: Project): number {
     return totalPrice;
 }
 
-function getAllPriceGroupsInProject(project: Project): string[] {
+function getAllPriceGroupsInProject(project: Project): [string, number][] {
 
     return project.teams.reduce((all, team) => {
         team.people.forEach(person => {
 
-            all.push(person.pricegroup);
+            const val = [person.pricegroup, person.allocation] as [string, number];
+            all.push(val);
         });
         return all;
-    }, [] as string[]);
+    }, [] as [string, number][]);
 }
 
 
@@ -41,6 +42,7 @@ function getAllPriceGroupsInProject(project: Project): string[] {
 export function getTotalHours(project: Project): number {
 
     return project.phases.reduce((total, phase) => {
+        
         return total + (phase.weeks * 37.5);
     }, 0);
 
