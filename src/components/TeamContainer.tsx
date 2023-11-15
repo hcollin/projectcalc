@@ -9,6 +9,7 @@ import { useState } from "react";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import DriveFileRenameOutlineIcon from "@mui/icons-material/DriveFileRenameOutline";
+import RemoveButton from "./RemoveButton";
 
 export interface TeamProps {
 	project: Project;
@@ -83,9 +84,10 @@ const TeamContainer = (props: TeamProps) => {
 							<Button variant="contained" color="primary" startIcon={<DriveFileRenameOutlineIcon />} onClick={() => setState("RENAME")}>
 								Rename
 							</Button>
-							<Button variant="contained" color="error" startIcon={<DeleteForeverIcon />} onClick={deleteTeam}>
+                            <RemoveButton onClick={deleteTeam} />
+							{/* <Button variant="contained" color="error" startIcon={<DeleteForeverIcon />} onClick={deleteTeam}>
 								Delete Team
-							</Button>
+							</Button> */}
 						</Stack>
 					</CardContent>
 				</CardActionArea>

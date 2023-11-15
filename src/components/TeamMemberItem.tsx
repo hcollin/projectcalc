@@ -20,8 +20,9 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import PersonRemoveIcon from "@mui/icons-material/PersonRemove";
 import ModeEditIcon from "@mui/icons-material/ModeEdit";
 
-import SaveIcon from "@mui/icons-material/Save";
-import CancelIcon from "@mui/icons-material/Cancel";
+import CancelButton from "./CancelButton";
+import SaveButton from "./SaveButton";
+import RemoveButton from "./RemoveButton";
 
 const TeamMemberItem = ({
 	project,
@@ -102,9 +103,10 @@ const TeamMemberItem = ({
 			)}
 			{!editMode && (
 				<AccordionActions>
-					<Button variant="contained" size="small" color="error" onClick={() => onRemove(person)} startIcon={<PersonRemoveIcon />}>
+					<RemoveButton onClick={() => onRemove(person)} />
+					{/* <Button variant="contained" size="small" color="error" onClick={() => onRemove(person)} startIcon={<PersonRemoveIcon />}>
 						Remove
-					</Button>
+					</Button> */}
 					<Button variant="contained" size="small" color="primary" onClick={() => setEditMode(true)} startIcon={<ModeEditIcon />}>
 						Edit Mode
 					</Button>
@@ -112,12 +114,8 @@ const TeamMemberItem = ({
 			)}
 			{editMode && (
 				<AccordionActions>
-					<Button variant="contained" size="small" color="secondary" onClick={cancelEditMode} startIcon={<CancelIcon />}>
-						Cancel
-					</Button>
-					<Button variant="contained" size="small" color="primary" onClick={saveMember} startIcon={<SaveIcon />}>
-						Save
-					</Button>
+					<CancelButton onClick={cancelEditMode} />
+					<SaveButton onClick={saveMember} />
 				</AccordionActions>
 			)}
 		</Accordion>
