@@ -5,15 +5,15 @@ import { v4 as uuidv4 } from 'uuid';
 
 
 export function createNewPerson(initVals?: Partial<Person>): Person {
-    const person: Person = Object.assign({
-        id: uuidv4(),
-        roles: [
-            [PERSONROLE.Developer, SENIORITY.Mid]
-        ],
-        hats: []
-    }, initVals || {});
+    const person: Person = Object.assign(
+        {
+            id: uuidv4(),
+            roles: [[PERSONROLE.Developer, SENIORITY.Mid]],
+            pricegroup: "defaultprice"
+        }, 
+        initVals || {});
 
-    if(initVals && initVals.id) person.id = uuidv4();
+    if (initVals && initVals.id) person.id = uuidv4();
 
     if (!person.name) {
         if (person.roles.length > 0) {

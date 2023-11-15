@@ -5,39 +5,38 @@ import { Project } from "../models/Project";
 
 export function calculatePrice(project: Project): number {
 
-    const roles = getAllRolesInProject(project);
+    const pricegroups = getAllPriceGroupsInProject(project);
 
-    let hourPrice = 0;
-    project.prices.forEach(priceItem => {
+    let totalPrice = 0;
+    const totalHours = getTotalHours(project);
 
-        priceItem.roles.forEach(priceItemRole => {
 
-            roles.forEach(role => {
-                if (priceItemRole[0] === role[0] && (priceItemRole[1] === SENIORITY.all || priceItemRole[1] === role[1])) {
-                    hourPrice += priceItem.value;
-                }
-            })
-        });
+    pricegroups.forEach(pricegroup => {
+
+        const price = project.prices.find(priceItem => priceItem.id === pricegroup) || project.prices[0];
+
+        const subPrice = price.value * totalHours;
+
+        totalPrice += subPrice;
+
 
     });
 
-
-
-    return hourPrice * getTotalHours(project);
+    return totalPrice;
 }
 
+function getAllPriceGroupsInProject(project: Project): string[] {
 
-function getAllRolesInProject(project: Project): [PERSONROLE, SENIORITY][] {
     return project.teams.reduce((all, team) => {
         team.people.forEach(person => {
-            person.roles.forEach(role => {
-                all.push(role);
-            })
+
+            all.push(person.pricegroup);
         });
         return all;
-    }, [] as [PERSONROLE, SENIORITY][]);
-
+    }, [] as string[]);
 }
+
+
 
 export function getTotalHours(project: Project): number {
 

@@ -23,25 +23,36 @@ const Prices = (props: PricesProps) => {
 
     }
 
-    const avgPrice = props.project.prices.reduce((acc, priceItem) => acc + priceItem.value, 0) / props.project.prices.length;
+    function removePrice(price: PriceItem) {
+            // Don't allow to remove the first price (the default one)
+            if(price.id === props.project.prices[0].id) { return }
+
+            const newPrices = props.project.prices.filter((priceItem) => {
+                return priceItem.id !== price.id;
+            });
+    
+            props.onUpdate({ ...props.project, prices: newPrices });
+    }
+
+
 
     return (
-        <Card>
-            <CardContent>
+        <>
 
-                <Typography variant="h5" component="div" sx={{ color: "primary.main" }}>
-                    Prices  ({avgPrice.toFixed(2)} €/h)
-                </Typography>
+            {props.project.prices.map((priceItem, index) => {
 
-                {props.project.prices.map((priceItem, index) => {
-                    return (
-                        <PriceSlider priceItem={priceItem} onUpdate={priceUpdate} key={`price-item-${priceItem.name}`} />
-                    );
+                return (
+                    <Card key={`price-item-${priceItem.name}`} >
+                        <CardContent>
+                            <PriceSlider priceItem={priceItem} onUpdate={priceUpdate} removePrice={removePrice}/>
+                        </CardContent>
+                    </Card>
+                );
 
-                })}
+            })}
 
-            </CardContent>
-        </Card>
+
+        </>
     )
 }
 

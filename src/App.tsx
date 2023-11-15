@@ -17,12 +17,13 @@ import MainMenuRight from './views/MainMenuRight';
 import PricesView from './views/PricesView';
 import PhasesView from './views/PhasesView';
 import TeamsView from './views/TeamsView';
+import { emptyProjectData } from './data/emptyProject';
 
 
 
 function App() {
 
-  const [project, setProject] = useState<Project>(exampleProject);
+  const [project, setProject] = useState<Project>(emptyProjectData);
 
   const [activeView, setActiveView] = useState<string>("prices");
 

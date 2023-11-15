@@ -13,9 +13,9 @@ const PersonGenerator = ({ onCreate, onCancel }: { onCreate: (p: Person) => void
 
     function newPerson() {
         const p: Person = createNewPerson({
-            roles: [
-                [role, sen]
-            ]
+            
+            roles: [[PERSONROLE.Developer, SENIORITY.Mid]],
+
         });
         onCreate(p);
     }

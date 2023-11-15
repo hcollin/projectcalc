@@ -17,9 +17,9 @@ export interface Team {
 }
 
 export interface PriceItem {
+    id: string;
     name: string;
     value: number;
-    roles: [PERSONROLE, SENIORITY][];
     min?: number;
     max?: number;
     default?: true;

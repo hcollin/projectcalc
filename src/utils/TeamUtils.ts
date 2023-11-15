@@ -121,28 +121,28 @@ const defaultTeams: [TEAMSIZE, TEAMTYPE, Person[]][] = [
     ]],
 
     [TEAMSIZE.MINI, TEAMTYPE.FULL, [
-        createNewPerson({ roles: [[PERSONROLE.Developer, SENIORITY.Senior], [PERSONROLE.Manager, SENIORITY.Junior]], hats: [HATS.PROJECTMANAGER, HATS.SCRUMMASTER, HATS.PRODUCTOWNER] }),
+        createNewPerson({ roles: [[PERSONROLE.Developer, SENIORITY.Senior], [PERSONROLE.Manager, SENIORITY.Junior]] }),
         createNewPerson({ roles: [[PERSONROLE.Developer, SENIORITY.Mid], [PERSONROLE.Tester, SENIORITY.Junior]] }),
 
     ]],
     [TEAMSIZE.SMALL, TEAMTYPE.FULL, [
-        createNewPerson({ name: "Project Lead", roles: [[PERSONROLE.Developer, SENIORITY.Lead], [PERSONROLE.Manager, SENIORITY.Junior]], hats: [HATS.PROJECTMANAGER, HATS.SCRUMMASTER, HATS.PRODUCTOWNER] }),
+        createNewPerson({ name: "Project Lead", roles: [[PERSONROLE.Developer, SENIORITY.Lead], [PERSONROLE.Manager, SENIORITY.Junior]] }),
         createNewPerson({ roles: [[PERSONROLE.Developer, SENIORITY.Senior]] }),
         createNewPerson({ roles: [[PERSONROLE.Developer, SENIORITY.Mid], [PERSONROLE.Designer, SENIORITY.Junior]] }),
         createNewPerson({ roles: [[PERSONROLE.Tester, SENIORITY.Mid]] }),
     ]],
     [TEAMSIZE.MEDIUM, TEAMTYPE.FULL, [
-        createNewPerson({ roles: [[PERSONROLE.Manager, SENIORITY.Mid]], hats: [HATS.PROJECTMANAGER, HATS.SCRUMMASTER] }),
-        createNewPerson({ roles: [[PERSONROLE.Developer, SENIORITY.Lead]], hats: [HATS.PRODUCTOWNER] }),
+        createNewPerson({ roles: [[PERSONROLE.Manager, SENIORITY.Mid]] }),
+        createNewPerson({ roles: [[PERSONROLE.Developer, SENIORITY.Lead]] }),
         createNewPerson({ roles: [[PERSONROLE.Developer, SENIORITY.Senior]] }),
         createNewPerson({ roles: [[PERSONROLE.Developer, SENIORITY.Mid]] }),
         createNewPerson({ roles: [[PERSONROLE.Designer, SENIORITY.Mid], [PERSONROLE.Developer, SENIORITY.Junior]] }),
         createNewPerson({ roles: [[PERSONROLE.Tester, SENIORITY.Mid]] }),
-        
+
     ]],
     [TEAMSIZE.LARGE, TEAMTYPE.FULL, [
-        createNewPerson({ name: "Project Manager", roles: [[PERSONROLE.Manager, SENIORITY.Mid]], hats: [HATS.PROJECTMANAGER, HATS.SCRUMMASTER] }),
-        createNewPerson({ name: "Designer / PO", roles: [[PERSONROLE.Designer, SENIORITY.Mid]], hats: [HATS.PRODUCTOWNER] }),
+        createNewPerson({ name: "Project Manager", roles: [[PERSONROLE.Manager, SENIORITY.Mid]] }),
+        createNewPerson({ name: "Designer / PO", roles: [[PERSONROLE.Designer, SENIORITY.Mid]] }),
         createNewPerson({ name: "Architect", roles: [[PERSONROLE.Developer, SENIORITY.Lead]] }),
         createNewPerson({ roles: [[PERSONROLE.Developer, SENIORITY.Senior]] }),
         createNewPerson({ roles: [[PERSONROLE.Developer, SENIORITY.Mid]] }),
@@ -150,12 +150,12 @@ const defaultTeams: [TEAMSIZE, TEAMTYPE, Person[]][] = [
         createNewPerson({ roles: [[PERSONROLE.Developer, SENIORITY.Junior]] }),
         createNewPerson({ roles: [[PERSONROLE.Tester, SENIORITY.Mid], [PERSONROLE.Developer, SENIORITY.Junior]] }),
         createNewPerson({ roles: [[PERSONROLE.Tester, SENIORITY.Senior]] }),
-        
-        
+
+
     ]],
     [TEAMSIZE.HUGE, TEAMTYPE.FULL, [
-        createNewPerson({ name: "Project Manager", roles: [[PERSONROLE.Manager, SENIORITY.Mid]], hats: [HATS.PROJECTMANAGER, HATS.SCRUMMASTER] }),
-        createNewPerson({ name: "Product Owner", roles: [[PERSONROLE.Manager, SENIORITY.Senior]], hats: [HATS.PRODUCTOWNER] }),
+        createNewPerson({ name: "Project Manager", roles: [[PERSONROLE.Manager, SENIORITY.Mid]] }),
+        createNewPerson({ name: "Product Owner", roles: [[PERSONROLE.Manager, SENIORITY.Senior]] }),
         createNewPerson({ name: "Designer", roles: [[PERSONROLE.Designer, SENIORITY.Senior]] }),
         createNewPerson({ name: "Architect", roles: [[PERSONROLE.Developer, SENIORITY.Principal]] }),
 
@@ -167,7 +167,7 @@ const defaultTeams: [TEAMSIZE, TEAMTYPE, Person[]][] = [
         createNewPerson({ roles: [[PERSONROLE.Developer, SENIORITY.Mid]] }),
         createNewPerson({ roles: [[PERSONROLE.Developer, SENIORITY.Junior]] }),
         createNewPerson({ roles: [[PERSONROLE.Developer, SENIORITY.Junior]] }),
-        
+
         createNewPerson({ roles: [[PERSONROLE.Tester, SENIORITY.Senior]] }),
         createNewPerson({ roles: [[PERSONROLE.Tester, SENIORITY.Mid]] }),
     ]],

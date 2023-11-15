@@ -96,7 +96,7 @@ const NewTeamCard = ({ onCreate, project }: { onCreate: (t: Team) => void, proje
                         <FormHelperText>What type of team this is?</FormHelperText>
                     </FormControl>
 
-                    <FormGroup>
+                    {/* <FormGroup>
                         <InputLabel>Additional Team Members</InputLabel>
                         <Stack direction="row" spacing={0} flexWrap="wrap">
                             {ADDITIONALMEMBERS.map((m) => {
@@ -107,7 +107,7 @@ const NewTeamCard = ({ onCreate, project }: { onCreate: (t: Team) => void, proje
                             })}
                         </Stack>
 
-                    </FormGroup>
+                    </FormGroup> */}
 
 
 

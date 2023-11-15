@@ -8,7 +8,6 @@ import { calculatePrice } from "../utils/projectUtils";
 const TotalPrice = ({ project }: { project: Project }) => {
 
     const price = calculatePrice(project);
-
     return (
         <Card>
             <CardContent>

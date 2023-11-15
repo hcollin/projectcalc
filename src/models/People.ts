@@ -3,8 +3,8 @@
 export interface Person {
     id: string;
     name?: string;
-    roles: [PERSONROLE, SENIORITY][];
-    hats: string[]
+    pricegroup: string;
+    roles: [PERSONROLE, SENIORITY][];  // The role, seniority
     
 }
 
