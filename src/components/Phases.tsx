@@ -21,6 +21,7 @@ const Phases = (props: PhasesProps) => {
 			id: Math.random().toString(36).substr(2, 9),
 			type: PHASETYPE.DEFAULT,
 			weeks: 4,
+            teamAllocations: []
 		};
 
 		const newPhases = [...props.project.phases, newPhase];
@@ -73,6 +74,7 @@ const Phases = (props: PhasesProps) => {
 							<ProjectPhaseItem
 								key={`phase-${phase.id}`}
 								phase={phase}
+                                project={props.project}
 								onUpdate={updatePhase}
 								onRemove={removePhase}
 								onMoveUp={moveUp}

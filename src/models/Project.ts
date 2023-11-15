@@ -32,6 +32,12 @@ export interface ProjectPhase {
     name?: string;
     weeks: number;
     type: PHASETYPE;
+    teamAllocations: PhaseTeamAllocation[];
+}
+
+export interface PhaseTeamAllocation {
+    teamId: string;
+    allocation: number;
 }
 
 export enum PHASETYPE {

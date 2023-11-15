@@ -42,7 +42,14 @@ export const exampleProject: Project = {
         {
             id: "phase-1",
             weeks: 16,
-            type: PHASETYPE.DEFAULT
+            type: PHASETYPE.DEFAULT,
+            teamAllocations: [
+                {
+                    teamId: "team-1",
+                    allocation: 1
+                }
+            ]
+
         }
     ]
 }

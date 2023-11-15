@@ -11,6 +11,7 @@ const PhasesView = (props: ViewProps) => {
 			id: Math.random().toString(36).substr(2, 9),
 			type: PHASETYPE.DEFAULT,
 			weeks: 4,
+            teamAllocations: [],
 		};
 
 		const newPhases = [...props.project.phases, newPhase];
@@ -28,7 +29,7 @@ const PhasesView = (props: ViewProps) => {
 					<Card>
 						<CardContent>
 							<Stack direction="row" spacing={3}>
-                                
+
 								<Button variant="contained" onClick={addNewPhase} size="small" startIcon={<AddIcon />}>
 									Add
 								</Button>

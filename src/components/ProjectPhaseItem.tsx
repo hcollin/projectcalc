@@ -1,10 +1,7 @@
 import {
 	Button,
 	ButtonGroup,
-	Card,
-	CardContent,
 	FormControl,
-	IconButton,
 	InputLabel,
 	MenuItem,
 	Select,
@@ -13,13 +10,12 @@ import {
 	TextField,
 	Typography,
 } from "@mui/material";
-import { PHASETYPE, ProjectPhase } from "../models/Project";
+import { PHASETYPE, PhaseTeamAllocation, Project, ProjectPhase, Team } from "../models/Project";
 import { useEffect, useState } from "react";
 
 import Grid from "@mui/material/Unstable_Grid2";
 
 import RemoveButton from "./RemoveButton";
-import EditIcon from "@mui/icons-material/Edit";
 
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
@@ -27,14 +23,17 @@ import CancelButton from "./CancelButton";
 import SaveButton from "./SaveButton";
 import EditButton from "./EditButton";
 
+
 const ProjectPhaseItem = ({
 	phase,
+	project,
 	onUpdate,
 	onRemove,
 	onMoveUp,
 	onMoveDown,
 }: {
 	phase: ProjectPhase;
+	project: Project;
 	onUpdate: (phase: ProjectPhase) => void;
 	onRemove: (phase: ProjectPhase) => void;
 	onMoveUp: (phase: ProjectPhase) => void;
@@ -45,6 +44,7 @@ const ProjectPhaseItem = ({
 
 	const [newName, setNewName] = useState<string>(phase.name || phase.type);
 	const [newType, setNewType] = useState<PHASETYPE>(phase.type);
+	const [allocations, setAllocations] = useState<PhaseTeamAllocation[]>(phase.teamAllocations || []);
 
 	useEffect(() => {
 		setValue(phase.weeks || 1);
@@ -59,15 +59,27 @@ const ProjectPhaseItem = ({
 	}
 
 	function confirmEdit() {
-		onUpdate({ ...phase, name: newName, type: newType });
+		onUpdate({ ...phase, name: newName, type: newType, teamAllocations: allocations });
 		setEditMode(false);
+	}
+
+	function updateTeamAllocation(phaseTeamAllocation: PhaseTeamAllocation) {
+		const newAllocations = [...allocations];
+		const index = newAllocations.findIndex((a) => a.teamId === phaseTeamAllocation.teamId);
+		if (index === -1) {
+			newAllocations.push(phaseTeamAllocation);
+		} else {
+			newAllocations[index] = phaseTeamAllocation;
+		}
+		setAllocations(newAllocations);
+	
 	}
 
 	if (editMode) {
 		return (
 			<Grid container spacing={1} alignItems="center" justifyContent="flex-start">
 				<Grid xs={4}>
-					<TextField label="Phase Name" value={newName} onChange={(e) => setNewName(e.target.value)} fullWidth  size="small"/>
+					<TextField label="Phase Name" value={newName} onChange={(e) => setNewName(e.target.value)} fullWidth size="small" />
 				</Grid>
 				<Grid xs={3}>
 					<FormControl fullWidth>
@@ -87,6 +99,12 @@ const ProjectPhaseItem = ({
 						<SaveButton onClick={() => confirmEdit()} />
 					</Stack>
 				</Grid>
+				<Grid xs={12}><Typography variant="h6">Team Allocations</Typography></Grid>
+				{project.teams.map((team) => {
+					const teamAllocation = phase.teamAllocations.find((a) => a.teamId === team.id) || { teamId: team.id, allocation: 1 };
+
+					return <TeamAllocationItem key={`${phase.id}-teamalloc-${team.id}`} team={team} phase={phase} alloc={teamAllocation} onUpdate={updateTeamAllocation} />;
+				})}
 			</Grid>
 		);
 	}
@@ -103,9 +121,10 @@ const ProjectPhaseItem = ({
 							<ArrowDownwardIcon fontSize="small" />
 						</Button>
 					</ButtonGroup>
-					
-					<Typography variant="subtitle1">{phase.name || phase.type} {phase.name !== "" && <Typography variant="subtitle2">{phase.type}</Typography>}</Typography>
-					
+
+					<Typography variant="subtitle1">
+						{phase.name || phase.type} {phase.name !== "" && <Typography variant="subtitle2">{phase.type}</Typography>}
+					</Typography>
 				</Stack>
 			</Grid>
 
@@ -120,9 +139,47 @@ const ProjectPhaseItem = ({
 			<Grid xs={1}>
 				<RemoveButton onClick={() => onRemove(phase)} noText />
 				<EditButton onClick={() => setEditMode(!editMode)} noText />
-				
 			</Grid>
 		</Grid>
+	);
+};
+
+const TeamAllocationItem = ({
+	team,
+	phase,
+	alloc,
+	onUpdate,
+}: {
+	team: Team;
+	phase: ProjectPhase;
+	alloc: PhaseTeamAllocation;
+	onUpdate: (phaseTeamAllocation: PhaseTeamAllocation) => void;
+}) => {
+
+	const [allValue, setAllValue] = useState<number>(alloc.allocation * 100);
+
+	function commitAllocation(e: any, v: number | number[]) {
+		if(typeof v === "number") {
+			onUpdate({ ...alloc, allocation: v / 100 });
+		}
+	}
+
+	return (
+		<>
+			<Grid xs={3}>{team.name}</Grid>
+			<Grid xs={8}>
+				<Slider
+					value={allValue}
+					min={0}
+					max={100}
+					onChange={(e, v) => setAllValue(v as number)}
+					step={10}
+					onChangeCommitted={commitAllocation}>
+
+					</Slider>
+			</Grid>
+			<Grid xs={1}>{allValue}%</Grid>
+		</>
 	);
 };
 
