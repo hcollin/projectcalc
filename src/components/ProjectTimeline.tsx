@@ -137,7 +137,7 @@ const TimeLinePhaseTeamHours = ({ phase, project }: { phase: ProjectPhase; proje
 							borderTopLeftRadius: cornerRad,
 						}}
 					>
-						<Typography variant="mini" sx={{ fontSize: fs }}>
+						<Typography variant="mini" sx={{ fontSize: fs }} color="#FFF">
 							{team ? team.name || team.id : ""} {hours}h
 						</Typography>
 					</Box>

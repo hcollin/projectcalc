@@ -1,9 +1,9 @@
-import { Button, Card, CardActionArea, CardContent, CardHeader, Divider, MenuItem, Select, Stack, TextField } from "@mui/material";
+import { Box, Button, Card, CardActionArea, CardContent, CardHeader, Divider, MenuItem, Modal, Select, Stack, TextField, Typography } from "@mui/material";
 import { Project, Team } from "../models/Project";
 import TeamMemberItem from "./TeamMemberItem";
 import { PERSONROLE, Person } from "../models/People";
 import { createNewPerson, rolesArray } from "../utils/personUitls";
-import PersonGenerator from "./PersonGenerator";
+import TeamMemberEditor from "./TeamMemberEditor";
 import { useState } from "react";
 
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
@@ -17,6 +17,20 @@ export interface TeamProps {
 	updateTeam: (team: Team) => void;
 	removeTeam: (team: Team) => void;
 }
+
+const modalStyle = {
+	position: "absolute" as "absolute",
+	top: "50%",
+	left: "50%",
+	transform: "translate(-50%, -50%)",
+	width: "auto",
+	minWidth: "50%",
+	maxWidth: 800,
+	bgcolor: "background.paper",
+	border: "2px solid #000",
+	boxShadow: 24,
+	p: 2,
+};
 
 const TeamContainer = (props: TeamProps) => {
 	const [state, setState] = useState<string>("MAINACTIONS");
@@ -66,12 +80,24 @@ const TeamContainer = (props: TeamProps) => {
 
 			<CardContent>
 				{people.map((person, index) => {
-					return <TeamMemberItem key={`person-${person.id}`} project={props.project} person={person} onUpdate={updatePerson} onRemove={removePerson} />;
+					return (
+						<TeamMemberItem key={`person-${person.id}`} project={props.project} person={person} onUpdate={updatePerson} onRemove={removePerson} />
+					);
 				})}
 			</CardContent>
+
+			<Modal open={state === "NEWMEMBER"} onClose={cancelAction}>
+				<Card sx={modalStyle} elevation={5}>
+					<CardHeader title="New Team Member" />
+					<TeamMemberEditor onCreate={newPerson} onCancel={cancelAction} project={props.project} />
+				</Card>
+			</Modal>
+
 			{state === "NEWMEMBER" && (
 				<CardActionArea>
-					<PersonGenerator onCreate={newPerson} onCancel={cancelAction} />
+					<Typography variant="body1" component="div" color="info" align="center">
+						Creating a new team member!
+					</Typography>
 				</CardActionArea>
 			)}
 			{state === "MAINACTIONS" && (
@@ -84,7 +110,7 @@ const TeamContainer = (props: TeamProps) => {
 							<Button variant="contained" color="primary" startIcon={<DriveFileRenameOutlineIcon />} onClick={() => setState("RENAME")}>
 								Rename
 							</Button>
-                            <RemoveButton onClick={deleteTeam} />
+							<RemoveButton onClick={deleteTeam} />
 							{/* <Button variant="contained" color="error" startIcon={<DeleteForeverIcon />} onClick={deleteTeam}>
 								Delete Team
 							</Button> */}
@@ -98,11 +124,11 @@ const TeamContainer = (props: TeamProps) => {
 					<CardContent>
 						<Stack direction="row" spacing={2}>
 							<TextField label="Team Name" defaultValue={newName} variant="outlined" onChange={(e) => setNewName(e.target.value)} />
-							
+
 							<Button variant="contained" color="secondary" startIcon={<PersonAddIcon />} onClick={cancelAction}>
 								Cancel
 							</Button>
-                            <Button variant="contained" color="primary" startIcon={<DriveFileRenameOutlineIcon />} onClick={renameTeam}>
+							<Button variant="contained" color="primary" startIcon={<DriveFileRenameOutlineIcon />} onClick={renameTeam}>
 								OK
 							</Button>
 						</Stack>
