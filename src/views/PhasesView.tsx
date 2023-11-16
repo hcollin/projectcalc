@@ -1,10 +1,11 @@
-import { Button, Card, CardContent, Container, Paper, Stack, Typography } from "@mui/material";
+import { Box, Button, Card, CardContent, Container, Paper, Stack, Typography } from "@mui/material";
 import Phases from "../components/Phases";
 import { ViewProps } from "../models/ViewProps";
 
 import AddIcon from "@mui/icons-material/Add";
 import { ProjectPhase, PHASETYPE } from "../models/Project";
 import { matchTeamsToPhases } from "../utils/projectUtils";
+import ProjectTimeline from "../components/ProjectTimeline";
 
 const PhasesView = (props: ViewProps) => {
 	function addNewPhase() {
@@ -12,7 +13,7 @@ const PhasesView = (props: ViewProps) => {
 			id: Math.random().toString(36).substr(2, 9),
 			type: PHASETYPE.DEFAULT,
 			weeks: 4,
-            teamAllocations: [],
+			teamAllocations: [],
 		};
 
 		const newPhases = [...props.project.phases, newPhase];
@@ -24,13 +25,18 @@ const PhasesView = (props: ViewProps) => {
 		<Container maxWidth="lg">
 			<Paper elevation={4} sx={{ padding: "1rem" }}>
 				<Typography variant="h4">Project Phases</Typography>
+
 				<Stack direction="column" spacing={1}>
+					
+					<Box sx={{padding: "1rem 0"}}>
+						<ProjectTimeline project={props.project} onUpdate={props.onUpdate} />
+					</Box>
+
 					<Phases project={props.project} onUpdate={props.onUpdate}></Phases>
 
 					<Card>
 						<CardContent>
 							<Stack direction="row" spacing={3}>
-
 								<Button variant="contained" onClick={addNewPhase} size="small" startIcon={<AddIcon />}>
 									Add
 								</Button>

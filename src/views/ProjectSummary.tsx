@@ -2,15 +2,16 @@ import { Box, Card, CardContent, CardHeader, Container, Drawer, Paper, Stack, Ty
 import { Project } from "../models/Project";
 import TotalPrice from "../components/TotalPrice";
 import { getAllocatedHoursForProject, getTotalHours } from "../utils/projectUtils";
+import { SETTINGS } from "../data/settings";
 
 const ProjectSummary = ({ project }: { project: Project }) => {
 	const hours = getTotalHours(project);
 
-	const months = Math.floor(hours / (21 * 7.5));
+	const months = Math.floor(hours / (SETTINGS.time.workMonth * SETTINGS.time.workingDay));
 
-	const days = Math.floor((hours - months * 21 * 7.5) / 7.5);
+	const days = Math.floor((hours - months * SETTINGS.time.workMonth * SETTINGS.time.workingDay) / SETTINGS.time.workingDay);
 
-	const restHours = hours - months * 21 * 7.5 - days * 7.5;
+	const restHours = hours - months * SETTINGS.time.workMonth * SETTINGS.time.workingDay - days * SETTINGS.time.workingDay;
 
 	// const weeks = Math.round(days / 5);
 

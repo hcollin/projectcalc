@@ -7,6 +7,7 @@ export const exampleProject: Project = {
     teams: [
         {
             id: "team-1",
+            name: "Dev Team",
             people: [
                 createNewPerson({ name: "PM / PO", roles: [[PERSONROLE.Manager, SENIORITY.Mid]], pricegroup: "highprice" }),
                 createNewPerson({ roles: [[PERSONROLE.Developer, SENIORITY.Senior]] }),
@@ -14,6 +15,15 @@ export const exampleProject: Project = {
                 createNewPerson({ roles: [[PERSONROLE.Developer, SENIORITY.Mid]] }),
 
 
+
+            ]
+        },
+        {
+            id: "team-2",
+            name: "Consulting",
+            people: [
+                createNewPerson({ name: "Solution Architect", roles: [[PERSONROLE.Developer, SENIORITY.Principal]], pricegroup: "highprice" }),
+                createNewPerson({ name: "Service Designer", roles: [[PERSONROLE.Designer, SENIORITY.Senior]], pricegroup: "highprice" }),
 
             ]
         }
@@ -47,6 +57,10 @@ export const exampleProject: Project = {
             teamAllocations: [
                 {
                     teamId: "team-1",
+                    allocation: 0.1
+                },
+                {
+                    teamId: "team-2",
                     allocation: 1
                 }
             ]
@@ -60,6 +74,10 @@ export const exampleProject: Project = {
                 {
                     teamId: "team-1",
                     allocation: 1
+                },
+                {
+                    teamId: "team-2",
+                    allocation: 0.8
                 }
             ]
         },
@@ -72,6 +90,10 @@ export const exampleProject: Project = {
                 {
                     teamId: "team-1",
                     allocation: 1
+                },
+                {
+                    teamId: "team-2",
+                    allocation: 0.2
                 }
             ]
         },
@@ -84,6 +106,10 @@ export const exampleProject: Project = {
                 {
                     teamId: "team-1",
                     allocation: 1
+                },
+                {
+                    teamId: "team-2",
+                    allocation: 0.1
                 }
             ]
         },
@@ -96,6 +122,10 @@ export const exampleProject: Project = {
                 {
                     teamId: "team-1",
                     allocation: 1
+                },
+                {
+                    teamId: "team-2",
+                    allocation: 0
                 }
             ]
         },{
@@ -106,7 +136,11 @@ export const exampleProject: Project = {
             teamAllocations: [
                 {
                     teamId: "team-1",
-                    allocation: 1
+                    allocation: 0.2
+                },
+                {
+                    teamId: "team-2",
+                    allocation: 0
                 }
             ]
         }

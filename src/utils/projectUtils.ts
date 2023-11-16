@@ -1,3 +1,4 @@
+import { SETTINGS } from "../data/settings";
 import { PERSONROLE, SENIORITY } from "../models/People";
 import { Project, ProjectPhase } from "../models/Project";
 
@@ -6,11 +7,11 @@ export function calculatePrice(project: Project): number {
 
 	let totalPrice = 0;
 	const totalHours = getPriceForAllocatedHoursForProject(project);
-	console.log("\n\nTOTAL HOURS", totalHours);
+	// console.log("\n\nTOTAL HOURS", totalHours);
 
 
 	const pricegroupkeys = Object.keys(totalHours);
-	console.log(pricegroupkeys)
+	// console.log(pricegroupkeys)
 
 	pricegroupkeys.forEach((pgk) => {
 		const pricegroup = project.prices.find((price) => price.id === pgk);
@@ -18,10 +19,10 @@ export function calculatePrice(project: Project): number {
 		// const price = project.prices.find((priceItem) => priceItem.id === pricegroup[0]) || project.prices[0];
 		const hours = totalHours[pricegroup.id] || 0;
 		const subPrice = pricegroup.value * hours;
-		console.log("SUBPRICE", totalPrice, subPrice, pricegroup)
+		
 		totalPrice += subPrice;
 	});
-	console.log("TOTALPRICE", totalPrice);
+	
 	return totalPrice;
 }
 
@@ -137,4 +138,8 @@ export function getTotalHours(project: Project): number {
 	return project.phases.reduce((total, phase) => {
 		return total + phase.weeks * 37.5;
 	}, 0);
+}
+
+export function convertHoursToWorkingDays(hours: number): number {
+	return hours / 7.5;
 }
