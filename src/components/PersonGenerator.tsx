@@ -5,6 +5,8 @@ import { useState } from "react";
 
 import CancelIcon from '@mui/icons-material/Cancel';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
+import CancelButton from "./CancelButton";
+import SaveButton from "./SaveButton";
 
 const PersonGenerator = ({ onCreate, onCancel }: { onCreate: (p: Person) => void, onCancel: () => void }) => {
 
@@ -51,10 +53,12 @@ const PersonGenerator = ({ onCreate, onCancel }: { onCreate: (p: Person) => void
                     })}
 
                 </Select>
-                <Button variant="contained" onClick={newPerson} startIcon={<PersonAddIcon />}>
+                <CancelButton onClick={onCancel} />
+                <SaveButton onClick={newPerson} />
+                {/* <Button variant="contained" color="secondary" startIcon={<CancelIcon />} onClick={onCancel}>Cancel</Button> */}
+                {/* <Button variant="contained" onClick={newPerson} startIcon={<PersonAddIcon />}>
                     Add
-                </Button>
-                <Button variant="contained" color="secondary" startIcon={<CancelIcon />} onClick={onCancel}>Cancel</Button>
+                </Button> */}
             </Stack>
         </CardContent>
     )

@@ -8,24 +8,35 @@ import { CssBaseline, createTheme } from "@mui/material";
 
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
 declare module '@mui/material/styles' {
-  interface TypographyVariants {
-    mini: React.CSSProperties;
-  }
+	interface TypographyVariants {
+		mini: React.CSSProperties;
+	}
+	// allow configuration using `createTheme`
+	interface TypographyVariantsOptions {
+		mini?: React.CSSProperties;
+	}
 
-  // allow configuration using `createTheme`
-  interface TypographyVariantsOptions {
-    mini?: React.CSSProperties;
-  }
+
+}
+
+declare module '@mui/material/styles' {
+	interface Palette {
+		custom: Palette['primary'];
+	}
+
+	interface PaletteOptions {
+		custom?: PaletteOptions['primary'];
+	}
 }
 
 // Update the Typography's variant prop options
 declare module '@mui/material/Typography' {
-  interface TypographyPropsVariantOverrides {
-    mini: true;
-  }
+	interface TypographyPropsVariantOverrides {
+		mini: true;
+	}
 }
 
-const theme = createTheme({
+let theme = createTheme({
 	palette: {
 		mode: "dark",
 	},
@@ -35,6 +46,43 @@ const theme = createTheme({
 			fontSize: "0.7rem",
 			fontWeight: "bold",
 		},
+	},
+});
+
+theme = createTheme(theme, {
+	palette: {
+
+		phaseConsulting: theme.palette.augmentColor({
+			color: {
+				main: "#965794",
+			},
+			name: "phaseConsulting"
+		}),
+		phaseRampUp: theme.palette.augmentColor({
+			color: {
+				main: "#7E75B8",
+			},
+			name: "phaseRampUp"
+		}),
+		phaseDevelopment: theme.palette.augmentColor({
+			color: {
+				main: "#5D90CC",
+			},
+			name: "phaseDevelopment"
+		}),
+		phaseRampDown: theme.palette.augmentColor({
+			color: {
+				main: "#46A8D1",
+			},
+			name: "phaseRampDown"
+		}),
+		phaseMaintenance: theme.palette.augmentColor({
+			color: {
+				main: "#55BCCB",
+			},
+			name: "phaseMaintenance"
+		}),
+
 	},
 });
 

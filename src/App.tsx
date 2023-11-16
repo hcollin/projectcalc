@@ -18,12 +18,13 @@ import PricesView from './views/PricesView';
 import PhasesView from './views/PhasesView';
 import TeamsView from './views/TeamsView';
 import { emptyProjectData } from './data/emptyProject';
+import ProjectTimelineView from './views/ProjectTimelineView';
 
 
 
 function App() {
 
-  const [project, setProject] = useState<Project>(emptyProjectData);
+  const [project, setProject] = useState<Project>(exampleProject);
 
   const [activeView, setActiveView] = useState<string>("prices");
 
@@ -44,6 +45,7 @@ function App() {
       {activeView === "prices" && <PricesView project={project} onUpdate={updateProject} />}
       {activeView === "phases" && <PhasesView project={project} onUpdate={updateProject} />}
       {activeView === "teams" && <TeamsView project={project} onUpdate={updateProject} />}
+      {activeView === "timeline" && <ProjectTimelineView project={project} onUpdate={updateProject} />}
 
 
       <ProjectSummary project={project} />

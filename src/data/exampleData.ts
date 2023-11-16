@@ -41,7 +41,32 @@ export const exampleProject: Project = {
     phases: [
         {
             id: "phase-1",
-            weeks: 16,
+            name: "Requirements",
+            weeks: 4,
+            type: PHASETYPE.CONSULTING,
+            teamAllocations: [
+                {
+                    teamId: "team-1",
+                    allocation: 1
+                }
+            ]
+        },
+        {
+            id: "phase-2",
+            name: "Design and PoC",
+            weeks: 8,
+            type: PHASETYPE.RAMPUP,
+            teamAllocations: [
+                {
+                    teamId: "team-1",
+                    allocation: 1
+                }
+            ]
+        },
+        {
+            id: "phase-3",
+            name: "MVP Development",
+            weeks: 12,
             type: PHASETYPE.DEFAULT,
             teamAllocations: [
                 {
@@ -49,7 +74,41 @@ export const exampleProject: Project = {
                     allocation: 1
                 }
             ]
-
+        },
+        {
+            id: "phase-4",
+            name: "Version 1.0 Development",
+            weeks: 24,
+            type: PHASETYPE.DEFAULT,
+            teamAllocations: [
+                {
+                    teamId: "team-1",
+                    allocation: 1
+                }
+            ]
+        },
+        {
+            id: "phase-5",
+            name: "Fixes and Handover",
+            weeks: 8,
+            type: PHASETYPE.RAMPDOWN,
+            teamAllocations: [
+                {
+                    teamId: "team-1",
+                    allocation: 1
+                }
+            ]
+        },{
+            id: "phase-6",
+            name: "Maintenance Start",
+            weeks: 2,
+            type: PHASETYPE.MAINTENANCE,
+            teamAllocations: [
+                {
+                    teamId: "team-1",
+                    allocation: 1
+                }
+            ]
         }
     ]
 }

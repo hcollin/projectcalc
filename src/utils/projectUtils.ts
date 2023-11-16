@@ -6,22 +6,22 @@ export function calculatePrice(project: Project): number {
 
 	let totalPrice = 0;
 	const totalHours = getPriceForAllocatedHoursForProject(project);
-    console.log("\n\nTOTAL HOURS", totalHours);
+	console.log("\n\nTOTAL HOURS", totalHours);
 
 
-    const pricegroupkeys = Object.keys(totalHours);
-    console.log(pricegroupkeys)
+	const pricegroupkeys = Object.keys(totalHours);
+	console.log(pricegroupkeys)
 
 	pricegroupkeys.forEach((pgk) => {
-        const pricegroup = project.prices.find((price) => price.id === pgk);
-        if(!pricegroup) return;
+		const pricegroup = project.prices.find((price) => price.id === pgk);
+		if (!pricegroup) return;
 		// const price = project.prices.find((priceItem) => priceItem.id === pricegroup[0]) || project.prices[0];
 		const hours = totalHours[pricegroup.id] || 0;
 		const subPrice = pricegroup.value * hours;
-        console.log("SUBPRICE", totalPrice, subPrice, pricegroup)
+		console.log("SUBPRICE", totalPrice, subPrice, pricegroup)
 		totalPrice += subPrice;
 	});
-    console.log("TOTALPRICE", totalPrice);
+	console.log("TOTALPRICE", totalPrice);
 	return totalPrice;
 }
 
@@ -55,7 +55,7 @@ export function getPriceForAllocatedHoursForProject(project: Project): Record<st
 	}, {} as Record<string, number>);
 }
 
-function getWorkHoursForPhase(project: Project, phase: ProjectPhase): number {
+export function getWorkHoursForPhase(project: Project, phase: ProjectPhase): number {
 	return project.teams.reduce((total, team) => {
 		const talloc = phase.teamAllocations.find((talloc) => talloc.teamId === team.id);
 
@@ -67,6 +67,22 @@ function getWorkHoursForPhase(project: Project, phase: ProjectPhase): number {
 
 		return total + teamHoursPerWeek * talloc.allocation * phase.weeks;
 	}, 0);
+}
+
+export function getWorkHoursForPhaseByTeam(project: Project, phase: ProjectPhase): Record<string, number> {
+	return project.teams.reduce((total, team) => {
+		const talloc = phase.teamAllocations.find((talloc) => talloc.teamId === team.id);
+
+		if (!talloc) return total;
+
+		const teamHoursPerWeek = team.people.reduce((total, person) => {
+			return total + person.allocation * 37.5;
+		}, 0);
+
+		total[team.id] = teamHoursPerWeek * talloc.allocation * phase.weeks;
+
+		return total;
+	}, {} as Record<string, number>)
 }
 
 function getWorkHoursAndPriceGroupForPhase(project: Project, phase: ProjectPhase): Record<string, number> {

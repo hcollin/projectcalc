@@ -3,7 +3,7 @@ import { Box, Button, Divider, Drawer, List, ListItem, ListItemButton, ListItemI
 import PriceChangeIcon from '@mui/icons-material/PriceChange';
 import CalendarViewWeekIcon from '@mui/icons-material/CalendarViewWeek';
 import GroupsIcon from '@mui/icons-material/Groups';
-
+import ViewTimelineIcon from '@mui/icons-material/ViewTimeline';
 
 const MainMenuRight = ({ active, onUpdate }: { active: string, onUpdate: (a: string) => void }) => {
 
@@ -52,6 +52,16 @@ const MainMenuRight = ({ active, onUpdate }: { active: string, onUpdate: (a: str
                                 <GroupsIcon />
                             </ListItemIcon>
                             <ListItemText primary="Teams" />
+                        </ListItemButton>
+                    </ListItem>
+
+                    <ListItem disablePadding>
+                        <ListItemButton onClick={() => changeView("timeline")}>
+
+                            <ListItemIcon>
+                                <ViewTimelineIcon />
+                            </ListItemIcon>
+                            <ListItemText primary="Timeline" />
                         </ListItemButton>
                     </ListItem>
 

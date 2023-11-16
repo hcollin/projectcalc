@@ -4,6 +4,7 @@ import { ViewProps } from "../models/ViewProps";
 
 import AddIcon from "@mui/icons-material/Add";
 import { ProjectPhase, PHASETYPE } from "../models/Project";
+import { matchTeamsToPhases } from "../utils/projectUtils";
 
 const PhasesView = (props: ViewProps) => {
 	function addNewPhase() {
@@ -16,7 +17,7 @@ const PhasesView = (props: ViewProps) => {
 
 		const newPhases = [...props.project.phases, newPhase];
 
-		props.onUpdate({ ...props.project, phases: newPhases });
+		props.onUpdate(matchTeamsToPhases({ ...props.project, phases: newPhases }));
 	}
 
 	return (
