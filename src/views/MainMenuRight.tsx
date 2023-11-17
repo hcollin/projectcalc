@@ -4,21 +4,32 @@ import PriceChangeIcon from '@mui/icons-material/PriceChange';
 import CalendarViewWeekIcon from '@mui/icons-material/CalendarViewWeek';
 import GroupsIcon from '@mui/icons-material/Groups';
 import ViewTimelineIcon from '@mui/icons-material/ViewTimeline';
+import { useEffect, useState } from "react";
 
-const MainMenuRight = ({ active, onUpdate }: { active: string, onUpdate: (a: string) => void }) => {
+const MainMenuRight = ({ active, onUpdate, isOpen }: { active: string, onUpdate: (a: string) => void, isOpen: boolean }) => {
+
+    const [open, setOpen] = useState(false);
+ 
+    useEffect(() => {
+        setOpen(isOpen);
+    }, [isOpen]);
 
     function changeView(view: string) {
         if (view !== active) {
             onUpdate(view);
+            
         }
 
     }
 
+    console.log("menustate", isOpen);
+
     return (
         <Drawer
             anchor="left"
-            variant="permanent"
-            open={true}
+            variant="persistent"
+            open={open}
+            onClose={() => setOpen(false)}
         >
             <Paper sx={{ display: "flex", flexDirection: "column", alignItems: "center", padding: "0.5rem", height: "100%" }} elevation={2}>
                 <Typography variant="h3" component="div" sx={{ color: "primary.main" }} >

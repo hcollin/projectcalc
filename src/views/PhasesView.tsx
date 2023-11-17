@@ -22,7 +22,7 @@ const PhasesView = (props: ViewProps) => {
 	}
 
 	return (
-		<Container maxWidth="lg">
+		<Container maxWidth="xl" sx={{mt: 10}}>
 			<Paper elevation={4} sx={{ padding: "1rem" }}>
 				<Typography variant="h4">Project Phases</Typography>
 

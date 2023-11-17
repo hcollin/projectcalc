@@ -143,3 +143,11 @@ export function getTotalHours(project: Project): number {
 export function convertHoursToWorkingDays(hours: number): number {
 	return hours / 7.5;
 }
+
+
+
+export function numberWithSpaces(x: number): string {
+	const parts = x.toString().split(".");
+	parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+	return parts.join(".");
+}

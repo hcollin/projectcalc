@@ -50,7 +50,7 @@ const PricesView = (props: ViewProps) => {
     const avgPrice = props.project.prices.reduce((acc, priceItem) => acc + priceItem.value, 0) / props.project.prices.length;
 
     return (
-        <Container maxWidth="lg">
+        <Container maxWidth="xl" sx={{mt: 10}}>
             <Paper elevation={4} sx={{ padding: "1rem" }}>
                 <Typography variant="h4">Prices</Typography>
 

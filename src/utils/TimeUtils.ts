@@ -17,6 +17,10 @@ export interface ReadableTime {
 export function weeksToReadableTime(weeks: number, holidays: boolean = false): ReadableTime {
 	const hours = weeks * SETTINGS.time.workWeek * SETTINGS.time.workingDay;
 
+	return hoursToReadableTime(hours, holidays);
+}
+
+export function hoursToReadableTime(hours: number, holidays: boolean = false): ReadableTime {
 	const months = Math.floor(hours / (SETTINGS.time.workMonth * SETTINGS.time.workingDay));
 
 	const days = Math.floor((hours - months * SETTINGS.time.workMonth * SETTINGS.time.workingDay) / SETTINGS.time.workingDay);
@@ -40,4 +44,5 @@ export function weeksToReadableTime(weeks: number, holidays: boolean = false): R
 	
 
 	return t;
+
 }
