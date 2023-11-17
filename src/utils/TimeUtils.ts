@@ -37,11 +37,11 @@ export function hoursToReadableTime(hours: number, holidays: boolean = false): R
 	};
 
 
-    if(months > 12 ) {
-        t.years = Math.floor(months / 12);
-        t.months = months - t.years * 12;
-    }
-	
+	if (months > 12) {
+		t.years = Math.floor(months / 12);
+		t.months = months - t.years * 12;
+	}
+
 
 	return t;
 

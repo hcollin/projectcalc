@@ -10,6 +10,7 @@ import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import DriveFileRenameOutlineIcon from "@mui/icons-material/DriveFileRenameOutline";
 import RemoveButton from "./RemoveButton";
+import MemberModal from "./MemberModal";
 
 export interface TeamProps {
 	project: Project;
@@ -85,13 +86,14 @@ const TeamContainer = (props: TeamProps) => {
 					);
 				})}
 			</CardContent>
+			{state === "NEWMEMBER" && <MemberModal cancelAction={cancelAction} createPerson={newPerson} project={props.project} />}
 
-			<Modal open={state === "NEWMEMBER"} onClose={cancelAction}>
+			{/* <Modal open={state === "NEWMEMBER"} onClose={cancelAction}>
 				<Card sx={modalStyle} elevation={5}>
 					<CardHeader title="New Team Member" />
 					<TeamMemberEditor onCreate={newPerson} onCancel={cancelAction} project={props.project} />
 				</Card>
-			</Modal>
+			</Modal> */}
 
 			{state === "NEWMEMBER" && (
 				<CardActionArea>
