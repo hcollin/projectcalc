@@ -28,21 +28,23 @@ const PREMADEMEMBERS: Person[] = [
     createNewPerson({ name: "Product Owner", roles: [[PERSONROLE.Manager, SENIORITY.Senior]], allocation: 1 }),
 ]
 
-const MemberModal = ({ cancelAction, createPerson, project }: { cancelAction: () => void, createPerson: (p: Person) => void, project: Project }) => {
+const MemberModal = ({ cancelAction, createPerson, project, editablePerson }: { editablePerson?: Person, cancelAction: () => void, createPerson: (p: Person) => void, project: Project }) => {
 
     const [tab, setTab] = useState<"custom" | "wizard">("custom");
 
     return (
         <Modal open={true} onClose={cancelAction}>
             <Card sx={modalStyle} elevation={5}>
-                <CardHeader title="New Team Member" />
+                {!editablePerson && <CardHeader title="New Team Member" />}
+                {editablePerson && <CardHeader title="Edit Team Member" />}
                 <Tabs value={tab} onChange={(e, v) => setTab(v)}>
                     <Tab value="custom" label="Custom" />
                     <Tab value="wizard" label="Wizard" />
                 </Tabs>
 
-                {tab === "custom" && <TeamMemberEditor onCreate={createPerson} onCancel={cancelAction} project={project} />}
-                {tab === "wizard" && <Stack direction="row" spacing={2} flexWrap="wrap" useFlexGap sx={{mt: 2}}>
+                {tab === "custom" && !editablePerson && <TeamMemberEditor onCreate={createPerson} onCancel={cancelAction} project={project} />}
+                {tab === "custom" && editablePerson && <TeamMemberEditor onCreate={createPerson} onCancel={cancelAction} project={project} editablePerson={editablePerson}/>}
+                {tab === "wizard" && <Stack direction="row" spacing={2} flexWrap="wrap" useFlexGap sx={{ mt: 2 }}>
                     {PREMADEMEMBERS.map((p, i) => <PreMadeMember key={p.id} p={p} createPerson={createPerson} />)}
                 </Stack>}
 

@@ -15,6 +15,7 @@ import MemberModal from "./MemberModal";
 export interface TeamProps {
 	project: Project;
 	team: Team;
+	showDetails: boolean;
 	updateTeam: (team: Team) => void;
 	removeTeam: (team: Team) => void;
 }
@@ -82,7 +83,7 @@ const TeamContainer = (props: TeamProps) => {
 			<CardContent>
 				{people.map((person, index) => {
 					return (
-						<TeamMemberItem key={`person-${person.id}`} project={props.project} person={person} onUpdate={updatePerson} onRemove={removePerson} />
+						<TeamMemberItem key={`person-${person.id}`} project={props.project} person={person} onUpdate={updatePerson} onRemove={removePerson} detailedInfo={props.showDetails}/>
 					);
 				})}
 			</CardContent>

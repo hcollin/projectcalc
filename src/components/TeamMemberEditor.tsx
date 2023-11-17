@@ -65,10 +65,10 @@ const TeamMemberEditor = ({ editablePerson, project, onCreate, onCancel }: { edi
 	}
 
 	function newPerson() {
-		if(person.roles.length === 0) return;
-		const p = {...person, allocation: allo/100};
+		if (person.roles.length === 0) return;
+		const p = { ...person, allocation: allo / 100 };
 		console.log(p.name, p);
-		if(!p.name || p.name === "") {
+		if (!p.name || p.name === "") {
 			const r = p.roles[0];
 			p.name = `${r[1] === SENIORITY.Mid ? "" : r[1] + " "}${r[0]}`;
 		}
@@ -118,9 +118,7 @@ const TeamMemberEditor = ({ editablePerson, project, onCreate, onCancel }: { edi
 
 				<Card elevation={8} sx={{ mb: 1 }}>
 					<CardContent>
-						{/* <Typography variant="subtitle1" component="div" color="default">
-							Roles and Seniority
-						</Typography> */}
+
 
 						<Stack direction="row" spacing={1} sx={{ m: 1, mb: 3 }} flexWrap="wrap" useFlexGap>
 							{person.roles.map((role, index) => {
@@ -166,7 +164,7 @@ const TeamMemberEditor = ({ editablePerson, project, onCreate, onCancel }: { edi
 				<Card elevation={8} sx={{ mb: 1 }}>
 					<CardContent>
 						<Stack direction="row" spacing={3} justifyContent="space-between" alignItems="center">
-						<Typography variant="body2" component="div" color="default" >
+							<Typography variant="body2" component="div" color="default" >
 								Allocation
 							</Typography>
 							<Slider aria-label="Allocation" value={allo} min={0} max={100} step={10} onChange={(e, v) => setAllo(v as number)} marks={true} />
