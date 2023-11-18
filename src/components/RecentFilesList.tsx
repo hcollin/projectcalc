@@ -48,7 +48,7 @@ const RecentFilesList = ({ project, onLoadProject }: { project: Project; onLoadP
 	return (
 		<>
 			<Divider />
-			<ListSubheader disableSticky>Recent Files</ListSubheader>
+			<ListSubheader disableSticky>Projects in local storage</ListSubheader>
 			{recentFiles.length === 0 && (
 				<Typography variant="body2" align="center" sx={{ mt: 2 }} color="gray">
 					No recent files...

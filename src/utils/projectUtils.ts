@@ -151,3 +151,22 @@ export function numberWithSpaces(x: number): string {
 	parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, " ");
 	return parts.join(".");
 }
+
+
+
+export function validateObjectAsProject(arg: any): arg is Project {
+	if (!arg) return false;
+
+	if (!arg.id) return false;
+	if (!arg.name) return false;
+	if (!arg.teams) return false;
+	if (!arg.prices) return false;
+	if (!arg.phases) return false;
+
+	if (!Array.isArray(arg.teams)) return false;
+	if (!Array.isArray(arg.prices)) return false;
+	if (!Array.isArray(arg.phases)) return false;
+
+
+	return true;
+}

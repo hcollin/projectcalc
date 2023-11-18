@@ -1,18 +1,21 @@
 import { useState } from "react";
-import { Divider, ListItem, ListItemButton, ListItemIcon, ListItemText, ListSubheader, Typography } from "@mui/material";
+import { Divider, ListItem, ListItemButton, ListItemIcon, ListItemText, ListSubheader, TextField, Typography } from "@mui/material";
 import ConfirmModal from "./ConfirmModal";
 
 import { Project } from "../models/Project";
-import { saveProjectToLocalStorage } from "../utils/fileUtils";
+import { exportProject, saveProjectToLocalStorage } from "../utils/fileUtils";
 
 import { emptyProjectData } from "../data/emptyProject";
 
 import SaveIcon from "@mui/icons-material/Save";
-import FileOpenIcon from "@mui/icons-material/FileOpen";
+
+import FileUploadIcon from '@mui/icons-material/FileUpload';
 import AddIcon from "@mui/icons-material/Add";
 import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
+import ModalWrapper from "./ModalWrapper";
+import ProjectJsonUpload from "./ProjectJsonUpload";
 
 
 const FileMenuOptions = ({ project, updateProject, onAction }: { project: Project; updateProject: (p: Project) => void; onAction: () => void }) => {
@@ -20,6 +23,7 @@ const FileMenuOptions = ({ project, updateProject, onAction }: { project: Projec
 	const [modalText, setModalText] = useState<string>("");
 
 	const [showMore, setShowMore] = useState<boolean>(false);
+	const [loadModalOpen, setLoadModalOpen] = useState<boolean>(false);
 
 	function handleConfirm() {
 		if (modalConfirmTarget === "newProject") {
@@ -28,8 +32,9 @@ const FileMenuOptions = ({ project, updateProject, onAction }: { project: Projec
 		if (modalConfirmTarget === "saveProject") {
 			saveProject();
 		}
-		if (modalConfirmTarget === "loadProject") {
-			loadProject();
+		
+		if (modalConfirmTarget === "downloadProject") {
+			downloadProject();
 		}
 		setModalConfirmTarget(null);
 		onAction();
@@ -45,9 +50,14 @@ const FileMenuOptions = ({ project, updateProject, onAction }: { project: Projec
 		setModalConfirmTarget("saveProject");
 	}
 
-	function askLoadProject() {}
+	function askLoadProject() {
+		setLoadModalOpen(true);
+	}
 
-	function askDownloadProject() {}
+	function askDownloadProject() {
+		setModalText("Download current project?");
+		setModalConfirmTarget("downloadProject");
+	}
 
 	function newProject() {
 		updateProject(emptyProjectData);
@@ -59,7 +69,14 @@ const FileMenuOptions = ({ project, updateProject, onAction }: { project: Projec
 		setModalConfirmTarget(null);
 	}
 
-	function loadProject() {
+	function loadProject(p: Project) {
+		setModalConfirmTarget(null);
+		setLoadModalOpen(false);
+		updateProject(p);
+	}
+
+	function downloadProject() {
+		exportProject(project);
 		setModalConfirmTarget(null);
 	}
 
@@ -82,17 +99,7 @@ const FileMenuOptions = ({ project, updateProject, onAction }: { project: Projec
 				</ListItemButton>
 			</ListItem>
 
-			{showMore && (
-				<ListItem disablePadding>
-					<ListItemButton onClick={() => setModalConfirmTarget("loadProject")}>
-						<ListItemIcon>
-							<FileOpenIcon />
-						</ListItemIcon>
-						<ListItemText primary="Upload Project" />
-					</ListItemButton>
-				</ListItem>
-			)}
-
+			
 			<ListItem disablePadding>
 				<ListItemButton onClick={askSaveProject}>
 					<ListItemIcon>
@@ -102,8 +109,20 @@ const FileMenuOptions = ({ project, updateProject, onAction }: { project: Projec
 				</ListItemButton>
 			</ListItem>
 
+			{showMore && (
+				<ListItem disablePadding>
+					<ListItemButton onClick={askLoadProject}>
+						<ListItemIcon>
+							<FileUploadIcon />
+						</ListItemIcon>
+						<ListItemText primary="Upload Project" />
+					</ListItemButton>
+				</ListItem>
+			)}
+
+
 			{showMore && <ListItem disablePadding>
-				<ListItemButton onClick={loadProject}>
+				<ListItemButton onClick={askDownloadProject}>
 					<ListItemIcon>
 						<FileDownloadIcon />
 					</ListItemIcon>
@@ -122,6 +141,17 @@ const FileMenuOptions = ({ project, updateProject, onAction }: { project: Projec
 			</ListItem>
 
 			<ConfirmModal onConfirm={handleConfirm} onCancel={cancelModal} open={modalConfirmTarget !== null} message={modalText} />
+			
+			{loadModalOpen &&
+				<ModalWrapper onClose={() => { setLoadModalOpen(false)}}>
+					
+					<Typography variant="h6">Upload Project</Typography>
+
+					<ProjectJsonUpload onLoadProject={loadProject}/>
+
+				</ModalWrapper>
+			}
+
 		</>
 	);
 };

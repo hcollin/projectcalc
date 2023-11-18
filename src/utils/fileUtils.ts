@@ -110,3 +110,18 @@ export function removeProjectFileListItem(fn: string) {
 		}
 	}
 }
+
+
+
+export function exportProject (project: Project) {
+    const jsonString = `data:text/json;chatset=utf-8,${encodeURIComponent(
+      JSON.stringify(project)
+    )}`;
+    const link = document.createElement("a");
+    link.href = jsonString;
+    link.download = projectFileName(project, true);
+
+    link.click();
+	setTimeout(() => link.remove(), 500);
+	
+  };
