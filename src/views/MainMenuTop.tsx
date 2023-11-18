@@ -1,35 +1,31 @@
-import {
-	AppBar,
-	Box,
-	Divider,
-	Drawer,
-	IconButton,
-	List,
-	ListItem,
-	ListItemButton,
-	ListItemIcon,
-	ListItemText,
-	Paper,
-	Stack,
-	Toolbar,
-	Typography,
-} from "@mui/material";
+import { useState } from "react";
+import { AppBar, Box, Drawer, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Paper, Stack, Toolbar, Typography } from "@mui/material";
+
 import { Project } from "../models/Project";
+
 import { calculatePrice, getAllocatedHoursForProject, getTotalHours, numberWithSpaces } from "../utils/projectUtils";
 import { hoursToReadableTime } from "../utils/TimeUtils";
-import { useState } from "react";
-
-import MenuIcon from "@mui/icons-material/Menu";
-import PriceChangeIcon from "@mui/icons-material/PriceChange";
-import CalendarViewWeekIcon from "@mui/icons-material/CalendarViewWeek";
-import GroupsIcon from "@mui/icons-material/Groups";
-import ViewTimelineIcon from "@mui/icons-material/ViewTimeline";
-
 
 import FileMenuOptions from "../components/FileMenuOptions";
 import RecentFilesList from "../components/RecentFilesList";
 
-const MainMenuTop = ({ project, active, onViewModeUpdate, updateProject }: { project: Project; active: string; onViewModeUpdate: (a: string) => void, updateProject: (p: Project) => void }) => {
+import MenuIcon from "@mui/icons-material/Menu";
+import CalendarViewWeekIcon from "@mui/icons-material/CalendarViewWeek";
+import GroupsIcon from "@mui/icons-material/Groups";
+import ViewTimelineIcon from "@mui/icons-material/ViewTimeline";
+import SettingsIcon from "@mui/icons-material/Settings";
+
+const MainMenuTop = ({
+	project,
+	active,
+	onViewModeUpdate,
+	updateProject,
+}: {
+	project: Project;
+	active: string;
+	onViewModeUpdate: (a: string) => void;
+	updateProject: (p: Project) => void;
+}) => {
 	const [menuState, setMenuState] = useState<boolean>(false);
 
 	const price = calculatePrice(project);
@@ -48,14 +44,14 @@ const MainMenuTop = ({ project, active, onViewModeUpdate, updateProject }: { pro
 		}
 	}
 
-    function closeMenu() {
-        setMenuState(false);
-    }
+	function closeMenu() {
+		setMenuState(false);
+	}
 
-    function updeteProjectAndCloseMenu(p: Project) {
-        updateProject(p);
-        setMenuState(false);
-    }
+	function updeteProjectAndCloseMenu(p: Project) {
+		updateProject(p);
+		setMenuState(false);
+	}
 
 	return (
 		<>
@@ -69,6 +65,12 @@ const MainMenuTop = ({ project, active, onViewModeUpdate, updateProject }: { pro
 						Project Calculator
 					</Typography>
 					<Stack direction="row" spacing={3} justifyContent="space-between" alignItems="center">
+						<Box sx={{ display: "flex", flexDirection: "column" }}>
+							<Typography variant="mini">Name</Typography>
+							<Typography variant="body1" color="primary">
+								{project.name || "no name yet"}
+							</Typography>
+						</Box>
 						<Box sx={{ display: "flex", flexDirection: "column" }}>
 							<Typography variant="mini">Total Price</Typography>
 							<Typography variant="body1" color="primary">
@@ -96,9 +98,9 @@ const MainMenuTop = ({ project, active, onViewModeUpdate, updateProject }: { pro
 						<ListItem disablePadding>
 							<ListItemButton onClick={() => changeView("prices")}>
 								<ListItemIcon>
-									<PriceChangeIcon />
+									<SettingsIcon />
 								</ListItemIcon>
-								<ListItemText primary="Prices" />
+								<ListItemText primary="Settings" />
 							</ListItemButton>
 						</ListItem>
 
@@ -130,15 +132,9 @@ const MainMenuTop = ({ project, active, onViewModeUpdate, updateProject }: { pro
 						</ListItem>
 
 						<FileMenuOptions project={project} updateProject={updateProject} onAction={closeMenu} />
-                        
-                        <RecentFilesList onLoadProject={updeteProjectAndCloseMenu} project={project} />
 
-
-                    </List>
-
-                    
-
-
+						<RecentFilesList onLoadProject={updeteProjectAndCloseMenu} project={project} />
+					</List>
 				</Paper>
 			</Drawer>
 		</>

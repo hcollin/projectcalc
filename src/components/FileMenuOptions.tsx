@@ -1,8 +1,9 @@
 import { useState } from "react";
-import { Divider, ListItem, ListItemButton, ListItemIcon, ListItemText } from "@mui/material";
+import { Divider, ListItem, ListItemButton, ListItemIcon, ListItemText, ListSubheader, Typography } from "@mui/material";
 import ConfirmModal from "./ConfirmModal";
 
 import { Project } from "../models/Project";
+import { saveProjectToLocalStorage } from "../utils/fileUtils";
 
 import { emptyProjectData } from "../data/emptyProject";
 
@@ -10,11 +11,15 @@ import SaveIcon from "@mui/icons-material/Save";
 import FileOpenIcon from "@mui/icons-material/FileOpen";
 import AddIcon from "@mui/icons-material/Add";
 import FileDownloadIcon from "@mui/icons-material/FileDownload";
-import { saveProjectToLocalStorage } from "../utils/fileUtils";
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import ExpandLessIcon from '@mui/icons-material/ExpandLess';
+
 
 const FileMenuOptions = ({ project, updateProject, onAction }: { project: Project; updateProject: (p: Project) => void; onAction: () => void }) => {
 	const [modalConfirmTarget, setModalConfirmTarget] = useState<string | null>(null);
-    const [modalText, setModalText] = useState<string>("");
+	const [modalText, setModalText] = useState<string>("");
+
+	const [showMore, setShowMore] = useState<boolean>(false);
 
 	function handleConfirm() {
 		if (modalConfirmTarget === "newProject") {
@@ -23,30 +28,26 @@ const FileMenuOptions = ({ project, updateProject, onAction }: { project: Projec
 		if (modalConfirmTarget === "saveProject") {
 			saveProject();
 		}
-        if (modalConfirmTarget === "loadProject") {
+		if (modalConfirmTarget === "loadProject") {
 			loadProject();
 		}
 		setModalConfirmTarget(null);
 		onAction();
 	}
 
-    function askNewProject() {
-        setModalText("Create new empty project?");
-        setModalConfirmTarget("newProject");
-    }
+	function askNewProject() {
+		setModalText("Create new empty project?");
+		setModalConfirmTarget("newProject");
+	}
 
-    function askSaveProject() {
-        setModalText("Save current project?");
-        setModalConfirmTarget("saveProject")
-    }
+	function askSaveProject() {
+		setModalText("Save current project?");
+		setModalConfirmTarget("saveProject");
+	}
 
-    function askLoadProject() {
+	function askLoadProject() {}
 
-    }
-
-    function askDownloadProject() {
-
-    }
+	function askDownloadProject() {}
 
 	function newProject() {
 		updateProject(emptyProjectData);
@@ -70,6 +71,8 @@ const FileMenuOptions = ({ project, updateProject, onAction }: { project: Projec
 		<>
 			<Divider />
 
+			<ListSubheader disableSticky>File menu</ListSubheader>
+
 			<ListItem disablePadding>
 				<ListItemButton onClick={askNewProject}>
 					<ListItemIcon>
@@ -79,14 +82,16 @@ const FileMenuOptions = ({ project, updateProject, onAction }: { project: Projec
 				</ListItemButton>
 			</ListItem>
 
-			<ListItem disablePadding>
-				<ListItemButton onClick={() => setModalConfirmTarget("loadProject")}>
-					<ListItemIcon>
-						<FileOpenIcon />
-					</ListItemIcon>
-					<ListItemText primary="Load Project" />
-				</ListItemButton>
-			</ListItem>
+			{showMore && (
+				<ListItem disablePadding>
+					<ListItemButton onClick={() => setModalConfirmTarget("loadProject")}>
+						<ListItemIcon>
+							<FileOpenIcon />
+						</ListItemIcon>
+						<ListItemText primary="Upload Project" />
+					</ListItemButton>
+				</ListItem>
+			)}
 
 			<ListItem disablePadding>
 				<ListItemButton onClick={askSaveProject}>
@@ -97,12 +102,22 @@ const FileMenuOptions = ({ project, updateProject, onAction }: { project: Projec
 				</ListItemButton>
 			</ListItem>
 
-			<ListItem disablePadding>
+			{showMore && <ListItem disablePadding>
 				<ListItemButton onClick={loadProject}>
 					<ListItemIcon>
 						<FileDownloadIcon />
 					</ListItemIcon>
 					<ListItemText primary="Download Project" />
+				</ListItemButton>
+			</ListItem>}
+
+			<ListItem disablePadding>
+				<ListItemButton onClick={() => setShowMore(!showMore)} sx={{justifyContent: "center"}}>
+					<ListItemIcon>
+						{!showMore && <ExpandMoreIcon />}
+						{showMore && <ExpandLessIcon />}
+					</ListItemIcon>
+					
 				</ListItemButton>
 			</ListItem>
 

@@ -12,10 +12,13 @@ export interface Person {
 
 export enum PERSONROLE {
     
+    Architect = "Architect",
     Developer = "Developer",
     Designer = "Designer",
     Manager = "Manager",
     Tester = "Tester",
+    Agile = "Agile",
+    Data = "Data",
 
     // BackendDeveloper = "Backend Developer",
     // FrontendDeveloper = "Frontend Developer",
@@ -51,10 +54,4 @@ export enum SENIORITY {
     Senior = "Senior",
     Lead = "Lead",
     Principal = "Principal",
-}
-
-export enum HATS {
-    SCRUMMASTER = "Scrumm Master",
-    PRODUCTOWNER = "Product Owner",
-    PROJECTMANAGER = "Project Manager",
 }

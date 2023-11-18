@@ -1,4 +1,4 @@
-import { Box, Divider, ListItem, ListItemButton, ListItemIcon, ListItemText, Typography } from "@mui/material";
+import { Box, Divider, ListItem, ListItemButton, ListItemIcon, ListItemText, ListSubheader, Typography } from "@mui/material";
 
 import FileOpenIcon from "@mui/icons-material/FileOpen";
 import { ProjectFileListItem, loadProjectFileList, loadProjectFromLocalStorage, removeFileFromLocalStorage } from "../utils/fileUtils";
@@ -48,7 +48,7 @@ const RecentFilesList = ({ project, onLoadProject }: { project: Project; onLoadP
 	return (
 		<>
 			<Divider />
-
+			<ListSubheader disableSticky>Recent Files</ListSubheader>
 			{recentFiles.length === 0 && (
 				<Typography variant="body2" align="center" sx={{ mt: 2 }} color="gray">
 					No recent files...

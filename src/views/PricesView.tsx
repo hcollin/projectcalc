@@ -7,6 +7,7 @@ import { v4 } from "uuid";
 
 
 import AddIcon from "@mui/icons-material/Add";
+import ProjectSettings from "../components/ProjectSettings";
 
 
 
@@ -52,16 +53,29 @@ const PricesView = (props: ViewProps) => {
     return (
         <Container maxWidth="xl" sx={{mt: 10}}>
             <Paper elevation={4} sx={{ padding: "1rem" }}>
-                <Typography variant="h4">Prices</Typography>
+                <Typography variant="h4">Project Settings</Typography>
 
-                <Stack direction="column" spacing={3} >
+                <Stack direction="column" spacing={3} sx={{mt: 3}}>
 
+
+                    
                     <Card>
+                        <CardContent>
+                            <ProjectSettings project={props.project} onUpdate={props.onUpdate} />
+                            
+                            
+
+                        </CardContent>
+                    </Card>
+
+                    {/* <Card>
                         <CardContent>
                             <Typography variant="h5">Average price</Typography>
                             <Typography variant="h6">{avgPrice}</Typography>
                         </CardContent>
-                    </Card>
+                    </Card> */}
+
+                    <Typography variant="h5">Price groups</Typography>
 
                     <Prices project={props.project} onUpdate={props.onUpdate} ></Prices>
 

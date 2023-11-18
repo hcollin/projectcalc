@@ -71,7 +71,7 @@ export function saveToProjectFileList(project: Project) {
 		const index = findProjectFileListItemIndex(project, projectList);
 
 		if (index >= 0) {
-			const newProjectListItem = { ...projectList[index], modified: Date.now() };
+			const newProjectListItem = { ...projectList[index], modified: Date.now(), name: project.name || "Unnamed project" };
 			projectList.splice(index, 1, newProjectListItem);
 		} else {
 			const newProjectListItem = { name: project.name || "Unnamed project", id: project.id, fn, created: Date.now(), modified: Date.now() };
