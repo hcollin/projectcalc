@@ -15,13 +15,13 @@ import { useEffect, useState } from "react";
 
 import Grid from "@mui/material/Unstable_Grid2";
 
-import RemoveButton from "./RemoveButton";
+import RemoveButton from "./buttons/RemoveButton";
 
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
-import CancelButton from "./CancelButton";
-import SaveButton from "./SaveButton";
-import EditButton from "./EditButton";
+import CancelButton from "./buttons/CancelButton";
+import SaveButton from "./buttons/SaveButton";
+import EditButton from "./buttons/EditButton";
 
 
 const ProjectPhaseItem = ({

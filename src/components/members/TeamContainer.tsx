@@ -1,15 +1,15 @@
 import { Box, Button, Card, CardActionArea, CardContent, CardHeader, Divider, MenuItem, Modal, Select, Stack, TextField, Typography } from "@mui/material";
-import { Project, Team } from "../models/Project";
+import { Project, Team } from "../../models/Project";
 import TeamMemberItem from "./TeamMemberItem";
-import { PERSONROLE, Person } from "../models/People";
-import { createNewPerson, rolesArray } from "../utils/personUitls";
+import { PERSONROLE, Person } from "../../models/People";
+import { createNewPerson, rolesArray } from "../../utils/personUitls";
 import TeamMemberEditor from "./TeamMemberEditor";
 import { useState } from "react";
 
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import DriveFileRenameOutlineIcon from "@mui/icons-material/DriveFileRenameOutline";
-import RemoveButton from "./RemoveButton";
+import RemoveButton from "../buttons/RemoveButton";
 import MemberModal from "./MemberModal";
 
 export interface TeamProps {

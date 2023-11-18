@@ -35,7 +35,7 @@ function App() {
 
   return (
     <>
-      <MainMenuTop active={activeView} onViewModeUpdate={updateActiveView} project={project} />
+      <MainMenuTop active={activeView} onViewModeUpdate={updateActiveView} project={project} updateProject={updateProject}/>
       {/* <MainMenuRight active={activeView} onUpdate={updateActiveView} isOpen={menuState} /> */}
 
 

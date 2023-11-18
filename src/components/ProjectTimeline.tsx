@@ -95,7 +95,7 @@ const TimelineTotalPhaseHours = ({ phase, project }: { phase: ProjectPhase; proj
 			}}
 		>
 			<Typography variant="mini" sx={{ fontSize: fs }}>
-				{hours}h
+				{Math.round(hours)}h
 			</Typography>
 		</Box>
 	);
@@ -138,7 +138,7 @@ const TimeLinePhaseTeamHours = ({ phase, project }: { phase: ProjectPhase; proje
 						}}
 					>
 						<Typography variant="mini" sx={{ fontSize: fs }} color="#FFF">
-							{team ? team.name || team.id : ""} {hours}h
+							{team ? team.name || team.id : ""} {Math.round(hours)}h
 						</Typography>
 					</Box>
 				);

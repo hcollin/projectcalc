@@ -3,6 +3,7 @@ import { PERSONROLE, Person, SENIORITY } from "./People";
 
 export interface Project {
     id: string;
+    name?: string;
     teams: Team[];
     prices: PriceItem[];
     phases: ProjectPhase[];

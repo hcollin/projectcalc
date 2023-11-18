@@ -22,13 +22,12 @@ const PhasesView = (props: ViewProps) => {
 	}
 
 	return (
-		<Container maxWidth="xl" sx={{mt: 10}}>
+		<Container maxWidth="xl" sx={{ mt: 10 }}>
 			<Paper elevation={4} sx={{ padding: "1rem" }}>
 				<Typography variant="h4">Project Phases</Typography>
 
 				<Stack direction="column" spacing={1}>
-					
-					<Box sx={{padding: "1rem 0"}}>
+					<Box sx={{ padding: "1rem 0" }}>
 						<ProjectTimeline project={props.project} onUpdate={props.onUpdate} />
 					</Box>
 
@@ -38,7 +37,7 @@ const PhasesView = (props: ViewProps) => {
 						<CardContent>
 							<Stack direction="row" spacing={3}>
 								<Button variant="contained" onClick={addNewPhase} size="small" startIcon={<AddIcon />}>
-									Add
+									Add new phase
 								</Button>
 							</Stack>
 						</CardContent>

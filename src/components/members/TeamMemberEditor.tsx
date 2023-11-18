@@ -17,27 +17,39 @@ import {
 	TextField,
 	Slider,
 } from "@mui/material";
-import { PERSONROLE, Person, SENIORITY } from "../models/People";
-import { createNewPerson, rolesArray, seniorityArray } from "../utils/personUitls";
+import { PERSONROLE, Person, SENIORITY } from "../../models/People";
+import { createNewPerson, rolesArray, seniorityArray } from "../../utils/personUitls";
 import { useState } from "react";
 
 import CancelIcon from "@mui/icons-material/Cancel";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
-import CancelButton from "./CancelButton";
-import SaveButton from "./SaveButton";
+import CancelButton from "../buttons/CancelButton";
+import SaveButton from "../buttons/SaveButton";
 import AddIcon from "@mui/icons-material/Add";
 import DeleteIcon from "@mui/icons-material/Delete";
 
 import { v4 } from "uuid";
-import { Project } from "../models/Project";
+import { Project } from "../../models/Project";
 
-const TeamMemberEditor = ({ editablePerson, project, onCreate, onCancel }: { editablePerson?: Person, project: Project; onCreate: (p: Person) => void; onCancel: () => void }) => {
-	const [person, setPerson] = useState<Person>(editablePerson || {
-		id: v4(),
-		roles: [[PERSONROLE.Developer, SENIORITY.Mid]],
-		pricegroup: project.prices[0].id,
-		allocation: 1,
-	});
+const TeamMemberEditor = ({
+	editablePerson,
+	project,
+	onCreate,
+	onCancel,
+}: {
+	editablePerson?: Person;
+	project: Project;
+	onCreate: (p: Person) => void;
+	onCancel: () => void;
+}) => {
+	const [person, setPerson] = useState<Person>(
+		editablePerson || {
+			id: v4(),
+			roles: [[PERSONROLE.Developer, SENIORITY.Mid]],
+			pricegroup: project.prices[0].id,
+			allocation: 1,
+		},
+	);
 
 	const [role, setRole] = useState<PERSONROLE>(PERSONROLE.Developer);
 	const [sen, setSen] = useState<SENIORITY>(SENIORITY.Mid);
@@ -118,8 +130,6 @@ const TeamMemberEditor = ({ editablePerson, project, onCreate, onCancel }: { edi
 
 				<Card elevation={8} sx={{ mb: 1 }}>
 					<CardContent>
-
-
 						<Stack direction="row" spacing={1} sx={{ m: 1, mb: 3 }} flexWrap="wrap" useFlexGap>
 							{person.roles.map((role, index) => {
 								return (
@@ -164,11 +174,11 @@ const TeamMemberEditor = ({ editablePerson, project, onCreate, onCancel }: { edi
 				<Card elevation={8} sx={{ mb: 1 }}>
 					<CardContent>
 						<Stack direction="row" spacing={3} justifyContent="space-between" alignItems="center">
-							<Typography variant="body2" component="div" color="default" >
+							<Typography variant="body2" component="div" color="default">
 								Allocation
 							</Typography>
 							<Slider aria-label="Allocation" value={allo} min={0} max={100} step={10} onChange={(e, v) => setAllo(v as number)} marks={true} />
-							<Typography variant="body1" component="div" color="default" >
+							<Typography variant="body1" component="div" color="default">
 								{allo}%
 							</Typography>
 						</Stack>

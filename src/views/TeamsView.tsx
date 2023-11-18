@@ -1,6 +1,6 @@
 import { Box, Button, Card, CardActionArea, CardContent, CardHeader, Container, Paper, Stack, ToggleButton, ToggleButtonGroup, Typography } from "@mui/material";
 import { ViewProps } from "../models/ViewProps";
-import TeamContainer from "../components/TeamContainer";
+import TeamContainer from "../components/members/TeamContainer";
 import { PhaseTeamAllocation, Team } from "../models/Project";
 import NewTeamCard from "../components/NewTeamCard";
 import { matchTeamsToPhases } from "../utils/projectUtils";

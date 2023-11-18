@@ -46,3 +46,9 @@ export function hoursToReadableTime(hours: number, holidays: boolean = false): R
 	return t;
 
 }
+
+
+export function formatTs(ts: number): string {
+	const date = new Date(ts);
+	return `${date.getFullYear()}.${date.getMonth() + 1}.${date.getDate()} ${date.getHours()}:${date.getMinutes().toString().padStart(2, "0")}`;
+}
