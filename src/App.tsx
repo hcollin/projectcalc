@@ -12,6 +12,7 @@ import ProjectTimelineView from './views/ProjectTimelineView';
 import MainMenuTop from './views/MainMenuTop';
 
 import './App.css';
+import ChartsView from './views/ChartsView';
 
 function App() {
 
@@ -42,7 +43,8 @@ function App() {
       {activeView === "prices" && <PricesView project={project} onUpdate={updateProject} />}
       {activeView === "phases" && <PhasesView project={project} onUpdate={updateProject} />}
       {activeView === "teams" && <TeamsView project={project} onUpdate={updateProject} />}
-      {activeView === "timeline" && <ProjectTimelineView project={project} onUpdate={updateProject} />}
+      {activeView === "charts" && <ChartsView project={project} onUpdate={updateProject} />}
+      {/* {activeView === "timeline" && <ProjectTimelineView project={project} onUpdate={updateProject} />} */}
 
 
       {/* <ProjectSummary project={project} /> */}

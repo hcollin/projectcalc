@@ -4,6 +4,8 @@ import { createNewPerson } from "../utils/personUitls";
 
 export const exampleProject: Project = {
     id: "proj-1",
+    name: "Example Project",
+    startDate: Date.now(),
     teams: [
         {
             id: "team-1",

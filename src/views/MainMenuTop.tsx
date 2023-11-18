@@ -12,7 +12,7 @@ import RecentFilesList from "../components/RecentFilesList";
 import MenuIcon from "@mui/icons-material/Menu";
 import CalendarViewWeekIcon from "@mui/icons-material/CalendarViewWeek";
 import GroupsIcon from "@mui/icons-material/Groups";
-import ViewTimelineIcon from "@mui/icons-material/ViewTimeline";
+import StackedBarChartIcon from '@mui/icons-material/StackedBarChart';
 import SettingsIcon from "@mui/icons-material/Settings";
 
 const MainMenuTop = ({
@@ -123,13 +123,22 @@ const MainMenuTop = ({
 						</ListItem>
 
 						<ListItem disablePadding>
+							<ListItemButton onClick={() => changeView("charts")}>
+								<ListItemIcon>
+									<StackedBarChartIcon />
+								</ListItemIcon>
+								<ListItemText primary="Charts" />
+							</ListItemButton>
+						</ListItem>
+
+						{/* <ListItem disablePadding>
 							<ListItemButton onClick={() => changeView("timeline")}>
 								<ListItemIcon>
 									<ViewTimelineIcon />
 								</ListItemIcon>
 								<ListItemText primary="Timeline" />
 							</ListItemButton>
-						</ListItem>
+						</ListItem> */}
 
 						<FileMenuOptions project={project} updateProject={updateProject} onAction={closeMenu} />
 
