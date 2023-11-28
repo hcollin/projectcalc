@@ -65,7 +65,9 @@ export const exampleProject: Project = {
                     teamId: "team-2",
                     allocation: 1
                 }
-            ]
+            ],
+            startAfter: [],
+            features: []
         },
         {
             id: "phase-2",
@@ -81,7 +83,9 @@ export const exampleProject: Project = {
                     teamId: "team-2",
                     allocation: 0.8
                 }
-            ]
+            ],
+            startAfter: ["phase-1"],
+            features: []
         },
         {
             id: "phase-3",
@@ -97,7 +101,9 @@ export const exampleProject: Project = {
                     teamId: "team-2",
                     allocation: 0.2
                 }
-            ]
+            ],
+            startAfter: ["phase-2"],
+            features: []
         },
         {
             id: "phase-4",
@@ -113,7 +119,9 @@ export const exampleProject: Project = {
                     teamId: "team-2",
                     allocation: 0.1
                 }
-            ]
+            ],
+            startAfter: ["phase-3"],
+            features: []
         },
         {
             id: "phase-5",
@@ -129,7 +137,9 @@ export const exampleProject: Project = {
                     teamId: "team-2",
                     allocation: 0
                 }
-            ]
+            ],
+            startAfter: ["phase-4"],
+            features: []
         },{
             id: "phase-6",
             name: "Maintenance Start",
@@ -144,7 +154,9 @@ export const exampleProject: Project = {
                     teamId: "team-2",
                     allocation: 0
                 }
-            ]
+            ],
+            startAfter: ["phase-5"],
+            features: []
         }
     ]
 }

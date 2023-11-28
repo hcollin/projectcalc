@@ -33,6 +33,9 @@ export interface ProjectPhase {
     weeks: number;
     type: PHASETYPE;
     teamAllocations: PhaseTeamAllocation[];
+    startTime?: number;
+    startAfter: string[];
+    features: ProjectPhaseFeature[];
 }
 
 export interface PhaseTeamAllocation {
@@ -69,4 +72,11 @@ export enum TEAMTYPE {
     DEV = "Development Team",
     UX = "Design Team",
     QA = "QA & Test Team",
+}
+
+export interface ProjectPhaseFeature {
+    id: string;
+    name: string;
+    
+
 }

@@ -53,7 +53,7 @@ const TeamMemberEditor = ({
 
 	const [role, setRole] = useState<PERSONROLE>(PERSONROLE.Developer);
 	const [sen, setSen] = useState<SENIORITY>(SENIORITY.Mid);
-	const [allo, setAllo] = useState<number>(100);
+	const [allo, setAllo] = useState<number>(editablePerson ? editablePerson.allocation*100 : 100);
 
 	function addRole() {
 		if (

@@ -1,10 +1,43 @@
-import { Project } from "../models/Project";
+import { v4 } from "uuid";
+import { PHASETYPE, Project, ProjectPhase } from "../models/Project";
+
+const EMPTYPROJECT: Project = {
+	id: v4(),
+	startDate: Date.now(),
+	teams: [],
+	prices: [],
+	phases: []
+}
+
+const EMPTYPHASE: ProjectPhase = {
+	id: v4(),
+	name: "No name",
+	weeks: 0,
+	type: PHASETYPE.DEFAULT,
+	teamAllocations: [],
+	startAfter: [],
+	features: []
+
+}
 
 export function loadProjectFromLocalStorage(fn: string): Project | undefined {
 	if (window.localStorage) {
 		const project = window.localStorage.getItem(fn);
+		try {
 		if (project) {
+			const p = Object.assign({}, EMPTYPROJECT, JSON.parse(project)) as Project;
+			if (p) {
+				p.phases = p.phases.map((phase) => {
+					return Object.assign({}, EMPTYPHASE, phase);
+				});
+				return p;
+			}
 			return JSON.parse(project);
+		}
+		} catch (e) {
+			console.error("Failed to load project");
+			console.log("Project: ", project);
+			console.error(e);
 		}
 	}
 	return undefined;

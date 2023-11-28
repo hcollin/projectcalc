@@ -1,8 +1,14 @@
-import { Card, CardContent } from "@mui/material";
+import { Button, ButtonGroup, Card, CardContent, ToggleButton, ToggleButtonGroup } from "@mui/material";
 import { PHASETYPE, Project, ProjectPhase } from "../models/Project";
 
 
 import ProjectPhaseItem from "./ProjectPhaseItem";
+import { useState } from "react";
+
+
+import CalendarViewMonthIcon from '@mui/icons-material/CalendarViewMonth';
+import CalendarViewWeekIcon from '@mui/icons-material/CalendarViewWeek';
+import LoopIcon from '@mui/icons-material/Loop';
 
 export interface PhasesProps {
 	project: Project;
@@ -10,6 +16,9 @@ export interface PhasesProps {
 }
 
 const Phases = (props: PhasesProps) => {
+
+	const [timeMode, setTimeMode] = useState<"WEEK" | "SPRINT" | "MONTH">("WEEK");
+
 	function updatePhase(phase: ProjectPhase) {
 		const newPhases = props.project.phases.map((p) => (p.id === phase.id ? phase : p));
 
@@ -21,7 +30,10 @@ const Phases = (props: PhasesProps) => {
 			id: Math.random().toString(36).substr(2, 9),
 			type: PHASETYPE.DEFAULT,
 			weeks: 4,
-            teamAllocations: []
+			teamAllocations: [],
+			startAfter: [],
+			features: []
+
 		};
 
 		const newPhases = [...props.project.phases, newPhase];
@@ -34,26 +46,6 @@ const Phases = (props: PhasesProps) => {
 		props.onUpdate({ ...props.project, phases: newPhases });
 	}
 
-	// // Move target phase up one position in the array
-	// function moveUp(target: number) {
-	// 	if (target === 0) return;
-
-	// 	const newPhases = [...props.project.phases];
-	// 	const item = newPhases.splice(target, 1)[0];
-	// 	newPhases.splice(target - 1, 0, item);
-	// 	props.onUpdate({ ...props.project, phases: newPhases });
-	// }
-
-	// function moveDown(target: number) {
-	// 	// If target is last item, do nothing
-	// 	if (target === props.project.phases.length - 1) return;
-
-	// 	const newPhases = [...props.project.phases];
-	// 	const item = newPhases.splice(target, 1)[0];
-	// 	newPhases.splice(target + 1, 0, item);
-	// 	props.onUpdate({ ...props.project, phases: newPhases });
-	// }
-
 	function moveUp(p: ProjectPhase) {
 		const index = props.project.phases.findIndex((phase) => phase.id === p.id);
 		if (index === 0) return;
@@ -63,10 +55,20 @@ const Phases = (props: PhasesProps) => {
 		props.onUpdate({ ...props.project, phases: newPhases });
 	}
 
-	function moveDown(p: ProjectPhase) {}
+	function moveDown(p: ProjectPhase) { }
 
 	return (
 		<>
+			<ToggleButtonGroup
+				value={timeMode}
+				exclusive
+				onChange={(e, value) => { setTimeMode(value) }}
+			>
+				<ToggleButton value="WEEK"><CalendarViewWeekIcon /></ToggleButton>
+				<ToggleButton value="SPRINT"><LoopIcon /></ToggleButton>
+				<ToggleButton value="MONTH"><CalendarViewMonthIcon /></ToggleButton>
+			</ToggleButtonGroup>
+
 			{props.project.phases.map((phase, index) => {
 				return (
 					<Card elevation={7}>
@@ -74,11 +76,12 @@ const Phases = (props: PhasesProps) => {
 							<ProjectPhaseItem
 								key={`phase-${phase.id}`}
 								phase={phase}
-                                project={props.project}
+								project={props.project}
 								onUpdate={updatePhase}
 								onRemove={removePhase}
 								onMoveUp={moveUp}
 								onMoveDown={moveDown}
+								timeMode={timeMode}
 							/>
 						</CardContent>
 					</Card>
