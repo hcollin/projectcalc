@@ -8,11 +8,13 @@ import { emptyProjectData } from './data/emptyProject';
 import PricesView from './views/PricesView';
 import PhasesView from './views/PhasesView';
 import TeamsView from './views/TeamsView';
-import ProjectTimelineView from './views/ProjectTimelineView';
+import ChartsView from './views/ChartsView';
+import SummaryView from './views/SummaryView';
+
 import MainMenuTop from './views/MainMenuTop';
 
 import './App.css';
-import ChartsView from './views/ChartsView';
+
 
 function App() {
 
@@ -44,6 +46,7 @@ function App() {
       {activeView === "phases" && <PhasesView project={project} onUpdate={updateProject} />}
       {activeView === "teams" && <TeamsView project={project} onUpdate={updateProject} />}
       {activeView === "charts" && <ChartsView project={project} onUpdate={updateProject} />}
+      {activeView === "summary" && <SummaryView project={project} onUpdate={updateProject} />}
       {/* {activeView === "timeline" && <ProjectTimelineView project={project} onUpdate={updateProject} />} */}
 
 

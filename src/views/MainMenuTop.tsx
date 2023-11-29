@@ -1,5 +1,22 @@
-import { useEffect, useState } from "react";
-import { AppBar, Box, Drawer, FormControlLabel, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Paper, Stack, Switch, Toolbar, Typography } from "@mui/material";
+import { useContext, useEffect, useState } from "react";
+import {
+	AppBar,
+	Box,
+	Drawer,
+	FormControlLabel,
+	IconButton,
+	List,
+	ListItem,
+	ListItemButton,
+	ListItemIcon,
+	ListItemText,
+	Paper,
+	Stack,
+	Switch,
+	Toolbar,
+	Typography,
+	useTheme,
+} from "@mui/material";
 
 import { Project } from "../models/Project";
 
@@ -12,9 +29,12 @@ import RecentFilesList from "../components/RecentFilesList";
 import MenuIcon from "@mui/icons-material/Menu";
 import CalendarViewWeekIcon from "@mui/icons-material/CalendarViewWeek";
 import GroupsIcon from "@mui/icons-material/Groups";
-import StackedBarChartIcon from '@mui/icons-material/StackedBarChart';
+import StackedBarChartIcon from "@mui/icons-material/StackedBarChart";
 import SettingsIcon from "@mui/icons-material/Settings";
-
+import TableViewIcon from "@mui/icons-material/TableView";
+import Brightness4Icon from "@mui/icons-material/Brightness4";
+import Brightness7Icon from "@mui/icons-material/Brightness7";
+import { ColorModeContext } from "../ToggleColorMode";
 
 const MainMenuTop = ({
 	project,
@@ -27,10 +47,12 @@ const MainMenuTop = ({
 	onViewModeUpdate: (a: string) => void;
 	updateProject: (p: Project) => void;
 }) => {
+	const theme = useTheme();
+	const colorMode = useContext(ColorModeContext);
+
 	const [menuState, setMenuState] = useState<boolean>(false);
-
 	
-
+	
 	const price = calculatePrice(project);
 	const billableHours = getAllocatedHoursForProject(project);
 
@@ -56,46 +78,48 @@ const MainMenuTop = ({
 		setMenuState(false);
 	}
 
+	console.log("THEME PALETTE MODE:", theme.palette.mode);
 
 	return (
 		<>
-			<AppBar>
+			<AppBar color="primary">
 				<Toolbar>
-					<IconButton size="large" edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }} onClick={openMenu}>
+					<IconButton size="large" edge="start" color="inherit" aria-label="menu" sx={{ mr: 1 }} onClick={openMenu}>
 						<MenuIcon />
 					</IconButton>
 
-					<Typography variant="h6" component="div" sx={{ flexGrow: 1 }} color="primary">
+					<IconButton sx={{ mr: 2 }} onClick={colorMode.toggleColorMode} color="inherit">
+						{theme.palette.mode === "dark" ? <Brightness7Icon /> : <Brightness4Icon />}
+					</IconButton>
+
+					<Typography variant="h6" component="div" sx={{ flexGrow: 1 }} color="text.accent">
 						Project Calculator
 					</Typography>
 					<Stack direction="row" spacing={3} justifyContent="space-between" alignItems="center">
 						<Box sx={{ display: "flex", flexDirection: "column" }}>
-							<Typography variant="mini">Name</Typography>
-							<Typography variant="body1" color="primary">
+							<Typography variant="mini" color="text.contrast">Name</Typography>
+							<Typography variant="body1" color="accent.main">
 								{project.name || "no name yet"}
 							</Typography>
 						</Box>
 						<Box sx={{ display: "flex", flexDirection: "column" }}>
-							<Typography variant="mini">Total Price</Typography>
+							<Typography variant="mini" color="text.secondary">Total Price</Typography>
 							<Typography variant="body1" color="primary">
 								{numberWithSpaces(price)} €
 							</Typography>
 						</Box>
 						<Box sx={{ display: "flex", flexDirection: "column" }}>
-							<Typography variant="mini">Billable hours</Typography>
+							<Typography variant="mini" color="text.secondary">Billable hours</Typography>
 							<Typography variant="body1" color="primary">
 								{billableHours} h
 							</Typography>
 						</Box>
 						<Box sx={{ display: "flex", flexDirection: "column" }}>
-							<Typography variant="mini">Duration</Typography>
+							<Typography variant="mini" color="text.secondary">Duration</Typography>
 							<Typography variant="body1" color="primary">
 								{duration.months}m {duration.days}d {duration.hours}h
 							</Typography>
 						</Box>
-
-						
-
 					</Stack>
 				</Toolbar>
 			</AppBar>
@@ -126,6 +150,15 @@ const MainMenuTop = ({
 									<GroupsIcon />
 								</ListItemIcon>
 								<ListItemText primary="Teams" />
+							</ListItemButton>
+						</ListItem>
+
+						<ListItem disablePadding>
+							<ListItemButton onClick={() => changeView("summary")}>
+								<ListItemIcon>
+									<TableViewIcon />
+								</ListItemIcon>
+								<ListItemText primary="Summary" />
 							</ListItemButton>
 						</ListItem>
 

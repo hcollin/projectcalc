@@ -1,18 +1,18 @@
-import React from "react";
+import React, { createContext } from "react";
 import ReactDOM from "react-dom/client";
 import reportWebVitals from "./reportWebVitals";
 import { ThemeProvider } from "@emotion/react";
 import { CssBaseline, createTheme } from "@mui/material";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import 'dayjs/locale/de';
-
-
+import "dayjs/locale/de";
 
 import "./index.css";
 import App from "./App";
+import ToggleColorMode from "./ToggleColorMode";
 
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
+
 declare module "@mui/material/styles" {
 	interface TypographyVariants {
 		mini: React.CSSProperties;
@@ -40,62 +40,15 @@ declare module "@mui/material/Typography" {
 	}
 }
 
-let theme = createTheme({
-	palette: {
-		mode: "dark",
-	},
-	typography: {
-		fontSize: 16,
-		mini: {
-			fontSize: "0.7rem",
-			fontWeight: "bold",
-		},
-	},
-});
-
-theme = createTheme(theme, {
-	palette: {
-		phaseConsulting: theme.palette.augmentColor({
-			color: {
-				main: "#965794",
-			},
-			name: "phaseConsulting",
-		}),
-		phaseRampUp: theme.palette.augmentColor({
-			color: {
-				main: "#7E75B8",
-			},
-			name: "phaseRampUp",
-		}),
-		phaseDevelopment: theme.palette.augmentColor({
-			color: {
-				main: "#5D90CC",
-			},
-			name: "phaseDevelopment",
-		}),
-		phaseRampDown: theme.palette.augmentColor({
-			color: {
-				main: "#46A8D1",
-			},
-			name: "phaseRampDown",
-		}),
-		phaseMaintenance: theme.palette.augmentColor({
-			color: {
-				main: "#55BCCB",
-			},
-			name: "phaseMaintenance",
-		}),
-	},
-});
-
 root.render(
 	<React.StrictMode>
-		<ThemeProvider theme={theme}>
-			<LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="de">
+		<LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="de">
+			<ToggleColorMode />
+			{/* <ThemeProvider theme={theme}>
 				<CssBaseline />
 				<App />
-			</LocalizationProvider>
-		</ThemeProvider>
+			</ThemeProvider> */}
+		</LocalizationProvider>
 	</React.StrictMode>,
 );
 
