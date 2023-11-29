@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { AppBar, Box, Drawer, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Paper, Stack, Toolbar, Typography } from "@mui/material";
+import { useEffect, useState } from "react";
+import { AppBar, Box, Drawer, FormControlLabel, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Paper, Stack, Switch, Toolbar, Typography } from "@mui/material";
 
 import { Project } from "../models/Project";
 
@@ -15,6 +15,7 @@ import GroupsIcon from "@mui/icons-material/Groups";
 import StackedBarChartIcon from '@mui/icons-material/StackedBarChart';
 import SettingsIcon from "@mui/icons-material/Settings";
 
+
 const MainMenuTop = ({
 	project,
 	active,
@@ -27,6 +28,8 @@ const MainMenuTop = ({
 	updateProject: (p: Project) => void;
 }) => {
 	const [menuState, setMenuState] = useState<boolean>(false);
+
+	
 
 	const price = calculatePrice(project);
 	const billableHours = getAllocatedHoursForProject(project);
@@ -52,6 +55,7 @@ const MainMenuTop = ({
 		updateProject(p);
 		setMenuState(false);
 	}
+
 
 	return (
 		<>
@@ -89,6 +93,9 @@ const MainMenuTop = ({
 								{duration.months}m {duration.days}d {duration.hours}h
 							</Typography>
 						</Box>
+
+						
+
 					</Stack>
 				</Toolbar>
 			</AppBar>

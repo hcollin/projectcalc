@@ -4,6 +4,7 @@ export interface Settings {
 		workWeek: number; // How many working days in a week
 		workMonth: number; // How many working days in a month
 		holidayWeeks: number; // How many weeks of holiday per year
+		roundHoursToDays: number; // Should we round hours to days when calculating
 	};
 	agile: {
 		sprintLength: number; // How many weeks is a sprint
@@ -17,6 +18,7 @@ const DEFAULTSETTINGS: Settings = {
 		workWeek: 5,
 		workMonth: 21,
 		holidayWeeks: 5,
+		roundHoursToDays: 0
 	},
 	agile: {
 		sprintLength: 2,
@@ -30,6 +32,7 @@ export const SETTINGS: Settings = Object.assign({}, DEFAULTSETTINGS);
 const dynamicSettings: { [key: string]: number } = {};
 
 export function setConf(key: string, value: number) {
+
 	dynamicSettings[key] = value;
 }
 

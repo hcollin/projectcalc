@@ -1,7 +1,7 @@
 import { v4 } from "uuid";
 import { Project, TEAMSIZE, TEAMTYPE, Team } from "../models/Project";
 import { PERSONROLE, Person, SENIORITY } from "../models/People";
-import { createNewPerson } from "./personUitls";
+import { createNewPerson } from "./personUtils";
 
 
 

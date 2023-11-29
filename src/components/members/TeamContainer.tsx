@@ -2,7 +2,7 @@ import { Box, Button, Card, CardActionArea, CardContent, CardHeader, Divider, Me
 import { Project, Team } from "../../models/Project";
 import TeamMemberItem from "./TeamMemberItem";
 import { PERSONROLE, Person } from "../../models/People";
-import { createNewPerson, rolesArray } from "../../utils/personUitls";
+import { createNewPerson, rolesArray } from "../../utils/personUtils";
 import TeamMemberEditor from "./TeamMemberEditor";
 import { useState } from "react";
 
@@ -83,11 +83,11 @@ const TeamContainer = (props: TeamProps) => {
 			<CardContent>
 				{people.map((person, index) => {
 					return (
-						<TeamMemberItem key={`person-${person.id}`} project={props.project} person={person} onUpdate={updatePerson} onRemove={removePerson} detailedInfo={props.showDetails}/>
+						<TeamMemberItem key={`person-${person.id}`} project={props.project} person={person} onUpdate={updatePerson} onRemove={removePerson} detailedInfo={props.showDetails} team={props.team}/>
 					);
 				})}
 			</CardContent>
-			{state === "NEWMEMBER" && <MemberModal cancelAction={cancelAction} createPerson={newPerson} project={props.project} />}
+			{state === "NEWMEMBER" && <MemberModal cancelAction={cancelAction} createPerson={newPerson} project={props.project} team={props.team}/>}
 
 			{/* <Modal open={state === "NEWMEMBER"} onClose={cancelAction}>
 				<Card sx={modalStyle} elevation={5}>

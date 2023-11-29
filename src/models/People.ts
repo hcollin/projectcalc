@@ -6,6 +6,7 @@ export interface Person {
     pricegroup: string;
     roles: [PERSONROLE, SENIORITY][];  // The role, seniority
     allocation: number;
+    teamId?: string; // The team this person belongs to. Not usually used
     
 }
 

@@ -1,12 +1,13 @@
-import { SETTINGS } from "../data/settings";
+import { SETTINGS, getConf } from "../data/settings";
 import { PERSONROLE, SENIORITY } from "../models/People";
 import { Project, ProjectPhase } from "../models/Project";
+import { roundHoursToFullWorkingDays } from "./TimeUtils";
 
 export function calculatePrice(project: Project): number {
 	const pricegroups = getAllPriceGroupsInProject(project);
 
 	let totalPrice = 0;
-	const totalHours = getPriceForAllocatedHoursForProject(project);
+	const totalHours = getAllocatedHoursByPriceGroup(project);
 	// console.log("\n\nTOTAL HOURS", totalHours);
 
 
@@ -19,14 +20,14 @@ export function calculatePrice(project: Project): number {
 		// const price = project.prices.find((priceItem) => priceItem.id === pricegroup[0]) || project.prices[0];
 		const hours = totalHours[pricegroup.id] || 0;
 		const subPrice = pricegroup.value * hours;
-		
+
 		totalPrice += subPrice;
 	});
-	
+
 	return totalPrice;
 }
 
-function getAllPriceGroupsInProject(project: Project): [string, number][] {
+export function getAllPriceGroupsInProject(project: Project): [string, number][] {
 	return project.teams.reduce((all, team) => {
 		team.people.forEach((person) => {
 			const val = [person.pricegroup, person.allocation] as [string, number];
@@ -42,7 +43,7 @@ export function getAllocatedHoursForProject(project: Project): number {
 	}, 0);
 }
 
-export function getPriceForAllocatedHoursForProject(project: Project): Record<string, number> {
+export function getAllocatedHoursByPriceGroup(project: Project): Record<string, number> {
 	return project.phases.reduce((total, phase) => {
 		const totalHours = getWorkHoursAndPriceGroupForPhase(project, phase);
 
@@ -56,7 +57,114 @@ export function getPriceForAllocatedHoursForProject(project: Project): Record<st
 	}, {} as Record<string, number>);
 }
 
+interface phaseSummary {
+	phaseId: string;
+	phaseName: string;
+	totalHours: number;
+	totalPrice: number;
+	pricePerGroup: Record<string, number>;
+}
+
+export function getPriceForEachPhase(p: Project): phaseSummary[] {
+
+	const res: phaseSummary[] = [];
+
+	p.phases.forEach((phase) => {
+
+		const grp = getWorkHoursAndPriceGroupForPhase(p, phase);
+		const th = getWorkHoursForPhase(p, phase);
+
+		const pgs = Object.keys(grp);
+
+		const pricePerGroup: Record<string, number> = {};
+
+		const price = pgs.reduce((total, pg) => {
+			const pricegroup = p.prices.find((price) => price.id === pg);
+			if (!pricegroup) return total;
+			const subPrice = pricegroup.value * grp[pg];
+
+
+			if (pricePerGroup[pg] === undefined) pricePerGroup[pg] = 0;
+			pricePerGroup[pg] += subPrice;
+
+			return total + subPrice;
+
+
+		}, 0);
+
+		res.push({
+			phaseId: phase.id,
+			phaseName: phase.name || phase.type,
+			totalHours: th,
+			totalPrice: price,
+			pricePerGroup: pricePerGroup,
+		});
+	});
+
+
+	return res;
+}
+
+interface MemberSummary {
+	memberId: string;
+	memberName: string;
+	totalHours: number;
+	totalPrice: number;
+	priceGroupId: string;
+
+}
+
+export function getTotalHoursAndPricePerMember(p: Project): MemberSummary[] {
+	const res: MemberSummary[] = [];
+
+
+
+
+	p.teams.forEach((team) => {
+		team.people.forEach((person) => {
+			const pricegroup = p.prices.find((price) => price.id === person.pricegroup);
+			if (!pricegroup) return;
+
+			const price = pricegroup.value * person.allocation * 37.5;
+
+			res.push({
+				memberId: person.id,
+				memberName: person.name || person.roles[0][0],
+				totalHours: 0,
+				totalPrice: 0,
+				priceGroupId: person.pricegroup,
+			});
+		});
+	});
+
+
+	p.phases.forEach((phase) => {
+		const grp = getWorkHoursAndPriceGroupForPhase(p, phase);
+
+		const pgs = Object.keys(grp);
+
+		pgs.forEach((pg) => {
+			const pricegroup = p.prices.find((price) => price.id === pg);
+			if (!pricegroup) return;
+
+			const price = pricegroup.value * grp[pg];
+
+			const member = res.find((member) => member.priceGroupId === pg);
+			if (!member) return;
+
+			member.totalHours += grp[pg];
+			member.totalPrice += price;
+		});
+	});
+
+	return res;
+
+
+}
+
+
 export function getWorkHoursForPhase(project: Project, phase: ProjectPhase): number {
+	const roundToDays = getConf("time.roundHoursToDays");
 	return project.teams.reduce((total, team) => {
 		const talloc = phase.teamAllocations.find((talloc) => talloc.teamId === team.id);
 
@@ -66,7 +174,7 @@ export function getWorkHoursForPhase(project: Project, phase: ProjectPhase): num
 			return total + person.allocation * 37.5;
 		}, 0);
 
-		return total + teamHoursPerWeek * talloc.allocation * phase.weeks;
+		return roundHoursToFullWorkingDays(total + teamHoursPerWeek * talloc.allocation * phase.weeks);
 	}, 0);
 }
 
@@ -77,7 +185,7 @@ export function getWorkHoursForPhaseByTeam(project: Project, phase: ProjectPhase
 		if (!talloc) return total;
 
 		const teamHoursPerWeek = team.people.reduce((total, person) => {
-			return total + person.allocation * 37.5;
+			return roundHoursToFullWorkingDays(total + person.allocation * 37.5);
 		}, 0);
 
 		total[team.id] = teamHoursPerWeek * talloc.allocation * phase.weeks;
@@ -97,7 +205,7 @@ function getWorkHoursAndPriceGroupForPhase(project: Project, phase: ProjectPhase
 				const pg = person.pricegroup;
 				if (ptotal[pg] === undefined) ptotal[person.pricegroup] = 0;
 
-				ptotal[pg] += 37.5 * talloc.allocation * person.allocation * phase.weeks;
+				ptotal[pg] += roundHoursToFullWorkingDays(37.5 * talloc.allocation * person.allocation * phase.weeks);
 
 				return ptotal;
 			},
@@ -136,12 +244,12 @@ export function matchTeamsToPhases(project: Project): Project {
 
 export function getTotalHours(project: Project): number {
 	return project.phases.reduce((total, phase) => {
-		return total + phase.weeks * 37.5;
+		return roundHoursToFullWorkingDays(total + phase.weeks * 37.5);
 	}, 0);
 }
 
 export function convertHoursToWorkingDays(hours: number): number {
-	return hours / 7.5;
+	return hours / getConf("time.workingDay");
 }
 
 

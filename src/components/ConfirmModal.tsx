@@ -38,7 +38,7 @@ const ConfirmModal = ({
 	const [modalOpen, setModalState] = useState<boolean>(false);
 
 	useEffect(() => {
-		console.log("Open modal", open);
+		
 		setModalState(open);
 	}, [open]);
 

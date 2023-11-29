@@ -1,5 +1,6 @@
 import { PERSONROLE, Person, SENIORITY } from "../models/People";
 import { v4 as uuidv4 } from 'uuid';
+import { Project } from "../models/Project";
 
 
 
@@ -56,4 +57,19 @@ export function seniorityArray(): [string, SENIORITY][] {
 
     }, new Set<[string, SENIORITY]>()));
 
+}
+
+export function getAllExistingMembers(p: Project): Person[]{
+
+    const res: Person[] = [];
+
+    p.teams.forEach(team => {
+        team.people.forEach(person => {
+            person.teamId = team.id;
+            res.push(person);
+
+        });
+    });
+
+    return res;
 }

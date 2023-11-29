@@ -1,6 +1,6 @@
 import { PERSONROLE, SENIORITY } from "../models/People";
 import { PHASETYPE, Project } from "../models/Project";
-import { createNewPerson } from "../utils/personUitls";
+import { createNewPerson } from "../utils/personUtils";
 
 export const exampleProject: Project = {
     id: "proj-1",

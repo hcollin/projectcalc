@@ -1,11 +1,12 @@
 import { Modal, Card, CardHeader, Tabs, Tab, Box, Stack, Typography, Button } from "@mui/material";
 import TeamMemberEditor from "./TeamMemberEditor";
-import { Project } from "../../models/Project";
+import { Project, Team } from "../../models/Project";
 import { PERSONROLE, Person, SENIORITY } from "../../models/People";
 import { useState } from "react";
-import { createNewPerson } from "../../utils/personUitls";
+import { createNewPerson, getAllExistingMembers } from "../../utils/personUtils";
 import { v4 } from "uuid";
 import { create } from "domain";
+import { get } from "http";
 
 const modalStyle = {
 	position: "absolute" as "absolute",
@@ -69,15 +70,24 @@ const MemberModal = ({
 	createPerson,
 	project,
 	editablePerson,
+	team
 }: {
 	editablePerson?: Person;
 	cancelAction: () => void;
 	createPerson: (p: Person) => void;
 	project: Project;
+	team: Team;
 }) => {
-	const [tab, setTab] = useState<"custom" | "wizard">("custom");
+	const [tab, setTab] = useState<"custom" | "wizard" | "inproject">("custom");
 
 	const title = editablePerson ? `Edit ${editablePerson.name}` : "New Team Member";
+
+	const existingMembers = getAllExistingMembers(project);
+
+	function selectExistingMember(p: Person) {
+		createPerson({ ...p });
+		cancelAction();
+	}
 
 	return (
 		<Modal open={true} onClose={cancelAction}>
@@ -88,6 +98,7 @@ const MemberModal = ({
 						<Tabs value={tab} onChange={(e, v) => setTab(v)}>
 							<Tab value="custom" label="Custom" />
 							<Tab value="wizard" label="Wizard" />
+							<Tab value="inproject" label="Existing" />
 						</Tabs>
 					</>
 				)}
@@ -112,6 +123,33 @@ const MemberModal = ({
 						})}
 					</Stack>
 				)}
+				{tab === "inproject" &&
+					<Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap sx={{ mt: 2 }}>
+						{existingMembers.map((p) => {
+
+							let fromTeam: string = "";
+
+							if (p.teamId !== undefined) {
+
+								// Do not include people from the same team 
+								if (p.teamId === team.id) return null;
+
+								// Do not include people that are already in the target team (even if they are from another team)
+								const exists = team.people.find(tp => tp.id === p.id);
+								if(exists) return null;
+
+								const pt = project.teams.find(t => t.id === p.teamId);
+								if (pt) {
+									fromTeam = ` from ${pt?.name}`;
+								}
+
+
+
+							}
+							// if(p.teamId !== undefined && p.teamId === team.id) return null;
+							return <Button variant="contained" onClick={() => selectExistingMember(p)}>{p.name}{fromTeam}</Button>;
+						})}
+					</Stack>}
 			</Card>
 		</Modal>
 	);

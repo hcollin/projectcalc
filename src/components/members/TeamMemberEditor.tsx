@@ -18,7 +18,7 @@ import {
 	Slider,
 } from "@mui/material";
 import { PERSONROLE, Person, SENIORITY } from "../../models/People";
-import { createNewPerson, rolesArray, seniorityArray } from "../../utils/personUitls";
+import { createNewPerson, rolesArray, seniorityArray } from "../../utils/personUtils";
 import { useState } from "react";
 
 import CancelIcon from "@mui/icons-material/Cancel";

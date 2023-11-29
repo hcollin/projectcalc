@@ -20,30 +20,30 @@ const PricesView = (props: ViewProps) => {
 
 
     function newPrice() {
-            
-            const defaultPrice = props.project.prices[0];
 
-            const targetPrice = Math.round((newPriceMin + newPriceMax) / 2);
-            const newPriceItem: PriceItem = {
-                id: v4(),
-                name: priceName,
-                value: targetPrice,
-                min: newPriceMin,
-                max: newPriceMax,
-            };
-    
-            const newPrices = [...props.project.prices, newPriceItem];
-    
-            props.onUpdate({ ...props.project, prices: newPrices });
-    
-            setPriceName("");
+        const defaultPrice = props.project.prices[0];
+
+        const targetPrice = Math.round((newPriceMin + newPriceMax) / 2);
+        const newPriceItem: PriceItem = {
+            id: v4(),
+            name: priceName,
+            value: targetPrice,
+            min: newPriceMin,
+            max: newPriceMax,
+        };
+
+        const newPrices = [...props.project.prices, newPriceItem];
+
+        props.onUpdate({ ...props.project, prices: newPrices });
+
+        setPriceName("");
     }
 
 
 
     function updateNewValue(e: any) {
         console.log(e.target.value);
-        
+
         setPriceName(e.target.value);
     }
 
@@ -51,19 +51,19 @@ const PricesView = (props: ViewProps) => {
     const avgPrice = props.project.prices.reduce((acc, priceItem) => acc + priceItem.value, 0) / props.project.prices.length;
 
     return (
-        <Container maxWidth="xl" sx={{mt: 10}}>
+        <Container maxWidth="xl" sx={{ mt: 10 }}>
             <Paper elevation={4} sx={{ padding: "1rem" }}>
                 <Typography variant="h4">Project Settings</Typography>
 
-                <Stack direction="column" spacing={3} sx={{mt: 3}}>
+                <Stack direction="column" spacing={3} sx={{ mt: 3 }}>
 
 
-                    
+
                     <Card>
                         <CardContent>
                             <ProjectSettings project={props.project} onUpdate={props.onUpdate} />
-                            
-                            
+
+
 
                         </CardContent>
                     </Card>
@@ -82,9 +82,9 @@ const PricesView = (props: ViewProps) => {
                     <Card>
                         <CardContent>
                             <Stack direction="row" spacing={3}>
-                                <TextField label="New pricegroup name" variant="outlined"  size="small" value={priceName} onChange={updateNewValue}></TextField>
-                                <TextField label="Minimum price" variant="outlined"  size="small" value={newPriceMin} onChange={(e) => setNewPriceMin(parseInt(e.target.value))} type="number"></TextField>
-                                <TextField label="Maximum price" variant="outlined"  size="small" value={newPriceMax} onChange={(e) => setNewPriceMax(parseInt(e.target.value))} type="number"></TextField>
+                                <TextField label="New pricegroup name" variant="outlined" size="small" value={priceName} onChange={updateNewValue}></TextField>
+                                <TextField label="Minimum price" variant="outlined" size="small" value={newPriceMin} onChange={(e) => setNewPriceMin(parseInt(e.target.value))} type="number"></TextField>
+                                <TextField label="Maximum price" variant="outlined" size="small" value={newPriceMax} onChange={(e) => setNewPriceMax(parseInt(e.target.value))} type="number"></TextField>
 
                                 <Button variant="contained" onClick={newPrice} size="small" startIcon={<AddIcon />}>Add</Button>
                             </Stack>

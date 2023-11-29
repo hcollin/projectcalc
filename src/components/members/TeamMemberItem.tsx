@@ -1,6 +1,6 @@
 import { Box, Card, CardContent, Chip, Stack, Typography } from "@mui/material";
 import { Person } from "../../models/People";
-import { Project } from "../../models/Project";
+import { Project, Team } from "../../models/Project";
 import { useState } from "react";
 
 import RemoveButton from "../buttons/RemoveButton";
@@ -10,12 +10,14 @@ import MemberModal from "./MemberModal";
 const TeamMemberItem = ({
 	project,
 	person,
+	team,
 	onUpdate,
 	onRemove,
 	detailedInfo,
 }: {
 	project: Project;
 	person: Person;
+	team: Team;
 	onUpdate: (p: Person) => void;
 	onRemove: (p: Person) => void;
 	detailedInfo: boolean;
@@ -72,7 +74,7 @@ const TeamMemberItem = ({
 							<EditButton onClick={() => setEditMode(true)} noText />
 						</Box>
 					)}
-					{editMode && <MemberModal cancelAction={cancelEditMode} createPerson={saveEdit} project={project} editablePerson={person} />}
+					{editMode && <MemberModal cancelAction={cancelEditMode} createPerson={saveEdit} project={project} editablePerson={person} team={team} />}
 				</Stack>
 			</CardContent>
 		</Card>

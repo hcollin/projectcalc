@@ -149,7 +149,7 @@ const PreMadePhase = ({ premadePhase, createPhase }: { premadePhase: PremadePhas
 
 	}
 
-	return (
+	return ( 
 		<Card elevation={7} sx={{p: 2, m: 1}}>
 			<Grid container spacing={1} alignItems="center" justifyContent="flex-start">
 				<Grid xs={5}>
