@@ -9,8 +9,6 @@ interface ModeTogglerProps {
 
 const ModeToggler = (props: ModeTogglerProps) => {
 
-
-
     return <ToggleButtonGroup
         value={props.value}
         exclusive

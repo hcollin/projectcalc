@@ -75,7 +75,7 @@ const ProjectPhaseItem = ({
 	}
 
 	function confirmEdit() {
-		onUpdate({ ...phase, name: newName, type: newType, teamAllocations: allocations });
+		onUpdate({ ...phase, name: newName, type: newType, teamAllocations: allocations, startAfter: newStartAfter });
 		setEditMode(false);
 	}
 

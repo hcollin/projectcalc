@@ -20,10 +20,11 @@ const style = {
 	padding: "1rem",
 };
 
-const RemoveButton = ({ onClick, noText }: { onClick: () => void, noText?: boolean }) => {
+const RemoveButton = ({ onClick, noText, disabled }: { onClick: () => void, noText?: boolean, disabled?: boolean }) => {
 	const [modelState, setModelState] = useState<boolean>(false);
 
 	const doNotShowText = noText || false;
+	const isDisabled = disabled || false;
 
 	function clickRemove() {
 		setModelState(true);
@@ -40,10 +41,10 @@ const RemoveButton = ({ onClick, noText }: { onClick: () => void, noText?: boole
 
 	return (
 		<>
-			{!doNotShowText && <Button variant="outlined" size="small" color="error" onClick={clickRemove} startIcon={<DeleteIcon />}>
+			{!doNotShowText && <Button variant="outlined" size="small" color="error" onClick={clickRemove} startIcon={<DeleteIcon />} disabled={isDisabled}>
 				Remove
 			</Button>}
-			{doNotShowText && <IconButton onClick={clickRemove} size="small" color="error">
+			{doNotShowText && <IconButton onClick={clickRemove} size="small" color="error" disabled={isDisabled}>
 				<DeleteIcon />
 			</IconButton>}
 			<Modal open={modelState}>

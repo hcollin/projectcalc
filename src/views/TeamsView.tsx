@@ -6,7 +6,6 @@ import NewTeamCard from "../components/NewTeamCard";
 import { matchTeamsToPhases } from "../utils/projectUtils";
 import { useState } from "react";
 
-
 import UnfoldMoreIcon from '@mui/icons-material/UnfoldMore';
 import UnfoldLessIcon from '@mui/icons-material/UnfoldLess';
 import useStoredState from "../hooks/useStoredState";

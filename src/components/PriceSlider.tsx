@@ -1,8 +1,10 @@
-import { Box, Button, Card, CardContent, Slider, Stack, Typography } from "@mui/material";
+import { Box, Button, Card, CardContent, Grid, Slider, Stack, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { PriceItem } from "../models/Project";
 
 import DeleteIcon from "@mui/icons-material/Delete";
+import RemoveButton from "./buttons/RemoveButton";
+import { getConf } from "../data/settings";
 export interface PriceSliderProps {
 	priceItem: PriceItem;
 	onUpdate: (price: PriceItem) => void;
@@ -31,31 +33,51 @@ const PriceSlider = (props: PriceSliderProps) => {
 	const min = props.priceItem.min || 50;
 	const max = props.priceItem.max || 150;
 
+	const dayPrice = value * getConf("time.workingDay");
+
 	return (
-		<Stack direction="row" spacing={2} alignItems="center">
-			<Typography variant="body2" component="div" sx={{ width: "15rem" }}>
-				{props.priceItem.name}
-			</Typography>
+		<Box sx={{pr: 2, pl: 2}}>
+			<Grid container spacing={2} >
+				<Grid item xs={6} lg={2}>
+					<Typography variant="body1" component="div">
+						{props.priceItem.name}
+					</Typography>
+				</Grid>
 
-			<Slider
-				value={value}
-				min={min}
-				max={max}
-				onChange={handleChange}
-				onChangeCommitted={handleCommit}
-				marks={[
-					{ value: min, label: `${min} €/h` },
-					{ value: max, label: `${max} €/h` },
-				]}
-			/>
-			<Typography variant="body1" component="div" sx={{ width: "8rem" }}>
-				{value} €/h
-			</Typography>
+				<Grid item xs={12} lg={7} order={{ xs: 4, lg: 2 }} >
+					<Slider
+						value={value}
+						min={min}
+						max={max}
+						onChange={handleChange}
+						onChangeCommitted={handleCommit}
+						marks={[
+							{ value: min, label: `${min} €/h` },
+							{ value: max, label: `${max} €/h` },
+						]}
 
-			<Button variant="contained" color="error" onClick={removePrice} disabled={props.priceItem.id === "defaultprice"}>
-				Delete
-			</Button>
-		</Stack>
+
+					/>
+				</Grid>
+				<Grid item xs={5} lg={2} order={{ xs: 2, lg: 3 }}>
+					<Stack direction="row" spacing={1} alignItems="center" justifyContent="space-evenly">
+						<Typography variant="body1" component="div" >
+							{value} €/h
+						</Typography>
+						<Typography variant="body2" component="div" >
+							{dayPrice} €/day
+						</Typography>
+					</Stack>
+				</Grid>
+
+				<Grid item xs={1} lg={1} order={{ xs: 3, lg: 4 }}>
+					<Stack direction="row" alignItems="center" justifyContent="center">
+						<RemoveButton onClick={removePrice} disabled={props.priceItem.id === "defaultprice"} noText />
+					</Stack>
+				</Grid>
+
+			</Grid>
+		</Box>
 	);
 };
 
