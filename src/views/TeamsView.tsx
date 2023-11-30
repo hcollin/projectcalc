@@ -9,10 +9,11 @@ import { useState } from "react";
 
 import UnfoldMoreIcon from '@mui/icons-material/UnfoldMore';
 import UnfoldLessIcon from '@mui/icons-material/UnfoldLess';
+import useStoredState from "../hooks/useStoredState";
 
 const TeamsView = (props: ViewProps) => {
 
-	const [showDetails, setShowDetails] = useState<boolean>(true);
+	const [showDetails, setShowDetails] = useStoredState<boolean>("teamsview-showdetails", true);
 
 	function updateTeam(team: Team) {
 		const newTeams = props.project.teams.map((t) => {

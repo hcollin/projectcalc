@@ -202,17 +202,17 @@ export function getHoursAndPriceForMemberInPhase(p: Project, phase: ProjectPhase
 }
 
 export function getWorkHoursForPhase(project: Project, phase: ProjectPhase): number {
-	const roundToDays = getConf("time.roundHoursToDays");
+	
 	return project.teams.reduce((total, team) => {
 		const talloc = phase.teamAllocations.find((talloc) => talloc.teamId === team.id);
 
 		if (!talloc) return total;
 
 		const teamHoursPerWeek = team.people.reduce((total, person) => {
-			return total + person.allocation * 37.5;
+			return roundHoursToFullWorkingDays(total + person.allocation * 37.5 * talloc.allocation * phase.weeks);
 		}, 0);
 
-		return roundHoursToFullWorkingDays(total + teamHoursPerWeek * talloc.allocation * phase.weeks);
+		return total + teamHoursPerWeek;
 	}, 0);
 }
 

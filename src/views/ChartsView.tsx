@@ -10,11 +10,12 @@ import CostOfEachPhaseBars from "../components/charts/CostOfEachPhaseBars";
 import { useState } from "react";
 import ModeToggler from "../components/charts/ModeToggler";
 import PerMemberPie from "../components/charts/PerMemberPie";
+import useStoredState from "../hooks/useStoredState";
 
 const ChartsView = (props: ViewProps) => {
 
-    const [costMode, setCostMode] = useState<"total" | "groups">("total");
-    const [pieMode, setPieMode] = useState<"hours" | "price" | "days">("hours");
+    const [costMode, setCostMode] = useStoredState<"total" | "groups">("chartview-costmode","total");
+    const [pieMode, setPieMode] = useStoredState<"hours" | "price" | "days">("chartview-piemode", "hours");
 
 
     function changePieMode(mode: string) {

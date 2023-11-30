@@ -97,26 +97,26 @@ const MainMenuTop = ({
 					</Typography>
 					<Stack direction="row" spacing={3} justifyContent="space-between" alignItems="center">
 						<Box sx={{ display: "flex", flexDirection: "column" }}>
-							<Typography variant="mini" color="text.contrast">Name</Typography>
+							<Typography variant="mini" color="text.secondary">Name</Typography>
 							<Typography variant="body1" color="accent.main">
 								{project.name || "no name yet"}
 							</Typography>
 						</Box>
 						<Box sx={{ display: "flex", flexDirection: "column" }}>
 							<Typography variant="mini" color="text.secondary">Total Price</Typography>
-							<Typography variant="body1" color="primary">
+							<Typography variant="body1" color="accent.main">
 								{numberWithSpaces(price)} €
 							</Typography>
 						</Box>
 						<Box sx={{ display: "flex", flexDirection: "column" }}>
 							<Typography variant="mini" color="text.secondary">Billable hours</Typography>
-							<Typography variant="body1" color="primary">
+							<Typography variant="body1" color="accent.main">
 								{billableHours} h
 							</Typography>
 						</Box>
 						<Box sx={{ display: "flex", flexDirection: "column" }}>
 							<Typography variant="mini" color="text.secondary">Duration</Typography>
-							<Typography variant="body1" color="primary">
+							<Typography variant="body1" color="accent.main">
 								{duration.months}m {duration.days}d {duration.hours}h
 							</Typography>
 						</Box>

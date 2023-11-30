@@ -17,7 +17,7 @@ const phaseColors: Record<PHASETYPE, string> = {
 };
 
 const ProjectTimeline = ({ project, onUpdate }: ViewProps) => {
-	const [hourMode, setHourMode] = useState<"total" | "team">("team");
+	const [hourMode, setHourMode] = useState<"total" | "team">("total");
 
 	const projectTotalWeeks = project.phases.reduce((acc, phase) => acc + phase.weeks, 0);
 	const phaseLengths = project.phases.map((p) => {
