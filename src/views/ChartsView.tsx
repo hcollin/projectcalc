@@ -38,20 +38,6 @@ const ChartsView = (props: ViewProps) => {
 
                 </Grid>
 
-
-                <Grid container spacing={2}>
-
-                    <Grid item xs={12} xl={12}>
-                        <Card>
-                            <CardContent>
-                                <Box sx={{ display: "block", height: "1rem", width: "2900px", backgroundColor: "primary.main" }} />
-                            </CardContent>
-                        </Card>
-
-                    </Grid>
-
-                </Grid>
-
                 <Grid container spacing={2}>
                     <Grid item xs={12} xl={6}>
                         <Stack direction="row" spacing={2} alignItems="center" justifyContent="space-between">
